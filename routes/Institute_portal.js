@@ -11,9 +11,8 @@ const s3 = new AWS.S3();
 //call through /api/User/Institute_login
 
 AWS.config.update({
-  accessKeyId: "ASIA36FQW3EGWVWSOJI4",
-  secretAccessKey: "IyUZZuiLsvQ5RZT8lvcOdqHNL/c8/mQ7zxwyTQUf",
-  
+ accessKeyId: "ASIAYHXLJ3PA4C5L6I6B",
+  secretAccessKey: "5gzzjR/5flhxVi4CwLMCBzD4miS1fEJQ9n7W7dKP",
 });
 
 router.post("/Institute_login",async (req,res) => {
