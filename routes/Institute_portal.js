@@ -268,26 +268,26 @@ const upload = multer({
       // Upload file to S3
       await s3
         .putObject({
-          Bucket: "cyclic-rich-rose-colt-fez-ap-south-1",
+          Bucket: "studydoor",
           Key: accreditationCertificate[0].originalname,
           Body: accreditationCertificate[0].buffer,
           ACL: 'public-read',
         })
         .promise();
   
-      const accreditationCertificateUrl = `https://${cyclic-smiling-ray-neckerchief-ap-southeast-2}.s3.amazonaws.com/${accreditationCertificate[0].originalname}`;
+      const accreditationCertificateUrl = `https://${studydoor}.s3.amazonaws.com/${accreditationCertificate[0].originalname}`;
   
       // Upload file to S3
       await s3
         .putObject({
-          Bucket: "cyclic-rich-rose-colt-fez-ap-south-1",
+          Bucket: "studydoor",
           Key: businessRegistrationCertificate[0].originalname,
           Body: businessRegistrationCertificate[0].buffer,
           ACL: 'public-read',
         })
         .promise();
   
-      const businessRegistrationCertificateUrl = `https://${cyclic-smiling-ray-neckerchief-ap-southeast-2}.s3.amazonaws.com/${businessRegistrationCertificate[0].originalname}`;
+      const businessRegistrationCertificateUrl = `https://${studydoor}.s3.amazonaws.com/${businessRegistrationCertificate[0].originalname}`;
   
 
       // const yourEmail= req.body.Email;
