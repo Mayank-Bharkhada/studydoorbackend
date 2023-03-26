@@ -7,12 +7,14 @@ const path = require('path');
 const multer = require('multer');
 const AWS = require('aws-sdk');
 
-const s3 = new AWS.S3();
-//call through /api/User/Institute_login
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
   secretAccessKey: "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",
-});
+  region:'ap-southeast-2',
+ });
+
+const s3 = new AWS.S3();
+//call through /api/User/Institute_login
 router.post("/Institute_login",async (req,res) => {
   try {
     const yourEmail = req.body.Email;
@@ -262,6 +264,14 @@ const upload = multer({
     console.log(accreditationCertificate[0].buffer)
     console.log(businessRegistrationCertificate[0].buffer)
     console.log("fileContent")
+
+    // s3.createBucket({ Bucket: "Studydoor" }, (err, data) => {
+    //   if (err) {
+    //     console.log(`Error creating bucket: ${err}`);
+    //   } else {
+    //     console.log(`Bucket created successfully: ${data.Location}`);
+    //   }
+    // });
     // console.log(file)
     try {
 
@@ -275,7 +285,7 @@ const upload = multer({
         })
         .promise();
   
-      const accreditationCertificateUrl = `https://${studydoor}.s3.amazonaws.com/${accreditationCertificate[0].originalname}`;
+      const accreditationCertificateUrl = `https://studydoor.s3.amazonaws.com/${accreditationCertificate[0].originalname}`;
   
       // Upload file to S3
       await s3
@@ -287,7 +297,7 @@ const upload = multer({
         })
         .promise();
   
-      const businessRegistrationCertificateUrl = `https://${studydoor}.s3.amazonaws.com/${businessRegistrationCertificate[0].originalname}`;
+      const businessRegistrationCertificateUrl = `https://studydoor.s3.amazonaws.com/${businessRegistrationCertificate[0].originalname}`;
   
 
       // const yourEmail= req.body.Email;
