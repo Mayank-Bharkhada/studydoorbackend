@@ -258,45 +258,107 @@ router.post('/Student_data', async (req, res) => {
   }
 });
   
-  //call through /api/User/student/Varification_request
+ //call through /api/User/student/Varification_request
 
-  const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './Uploads/Photos/Student_varification_photos');
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 5 * 1024 * 1024, // Limit file size to 5 MB
     },
-    filename: async function  (req, file, cb) {
-
-      console.log("------------------------------");
-      console.log(req.body);
-      console.log("------------------------------");
-      const File_name = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
-      cb(null, File_name);
-      StudentModel.updateOne({ email: req.body.Email }, { varificationPhoto : File_name }, (error, result) => {
-        if (error) {
-          console.error(error);
-        } else {
-          console.log(result);
-         
-        }
-      });
-    }
   });
+    
+    // const upload = multer({ storage: storage });
   
-  const upload = multer({ storage: storage });
-  router.post("/student/Varification_request", upload.single('Varificationphoto'),async (req,res) => {
-    const yourEmail= req.body.Email;
-    const yourAdharNumber = req.body.AdharNumber;
-    StudentModel.updateOne({ email: yourEmail }, { adharNumber : yourAdharNumber , varificationRequest : 1 }, (error, result) => {
-      if (error) {
-        console.error(error);
-      } else {
-        console.log(result);
-        res.json([{
-          id : 1,
-          text : "Data is Success fully inserted"
-        }]);
-      }
-    });
-  });
+    router.post("/student/Varification_request",  upload.fields([
+      { name: 'officialTranscript', maxCount: 1 },
+      { name: 'leavigCertificate', maxCount: 1 },
+      { name: 'governmentIssuedIdentification', maxCount: 1 },
+    ]),async (req,res) => {
+      const officialTranscript = req.files.officialTranscript;
+      const leavigCertificate = req.files.leavigCertificate;
+      const governmentIssuedIdentification = req.files.governmentIssuedIdentification;
+      const yourEmail= req.body.Email;
+  
+      // const file = req.files;
+      console.log("fileContent")
+      console.log(officialTranscript[0].buffer)
+      console.log(leavigCertificate[0].buffer)
+      console.log(governmentIssuedIdentification[0].buffer)
+      console.log("fileContent")
+  
+      try {
+  
+        // Upload file to S3
+        await s3
+          .putObject({
+            Bucket: "studydoor",
+            Key: officialTranscript[0].originalname,
+            Body: officialTranscript[0].buffer,
+            ACL: 'public-read',
+          })
+          .promise();
+    
+        const officialTranscriptUrl = `https://studydoor.s3.amazonaws.com/${officialTranscript[0].originalname}`;
+    
+        // Upload file to S3
+        await s3
+          .putObject({
+            Bucket: "studydoor",
+            Key: leavigCertificate[0].originalname,
+            Body: leavigCertificate[0].buffer,
+            ACL: 'public-read',
+          })
+          .promise();
+    
+        const leavigCertificateUrl = `https://studydoor.s3.amazonaws.com/${leavigCertificate[0].originalname}`;
+    
+        // Upload file to S3
+        await s3
+          .putObject({
+            Bucket: "studydoor",
+            Key: governmentIssuedIdentification[0].originalname,
+            Body: governmentIssuedIdentification[0].buffer,
+            ACL: 'public-read',
+          })
+          .promise();
+    
+        const governmentIssuedIdentificationUrl = `https://studydoor.s3.amazonaws.com/${governmentIssuedIdentification[0].originalname}`;
+    
+  
 
+        const filter = { email: yourEmail };
+        const update = { $set: { varificationRequest: 1 } };
+        const options = { upsert: false };
+    
+        const result = await StudentModel.updateOne(filter, update, options);
+    
+        console.log(`${result.matchedCount} document(s) matched the filter criteria.`);
+        console.log(`${result.modifiedCount} document(s) was/were updated.`);
+    
+        // Handle the response data here
+        if (result.modifiedCount === 1) {
+          console.log('Document updated successfully!');
+          res.json([{
+            id : 1,
+            text : "Data is Success fully inserted",
+            Url1 : officialTranscriptUrl,
+            Url2 : leavigCertificateUrl,
+            Url3 : governmentIssuedIdentificationUrl
+          }]);
+        } else {
+          console.log('No documents were updated.');
+          res.json([{
+            id : 0,
+            text : "Error ! Data is not inserted",
+          }]);
+        }
+    
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to upload image' });
+      }
+      
+    
+    });
+  
 module.exports = router;
