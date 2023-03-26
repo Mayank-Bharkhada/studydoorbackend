@@ -7,6 +7,15 @@ const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto');
 const sendOTP =  require('../module/Otp');
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+  accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
+  secretAccessKey: "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",
+  region:'ap-southeast-2',
+ });
+
+const s3 = new AWS.S3();
 
 //call through /api/User/Student_login
 
