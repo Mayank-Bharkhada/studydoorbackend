@@ -271,7 +271,7 @@ const upload = multer({
       // Upload file to S3
       await s3
         .putObject({
-          Bucket: "cyclic-smiling-ray-neckerchief-ap-southeast-2",
+          Bucket: "cyclic-rich-rose-colt-fez-ap-south-1",
           Key: accreditationCertificate[0].originalname,
           Body: accreditationCertificate[0].buffer,
           ACL: 'public-read',
@@ -283,7 +283,7 @@ const upload = multer({
       // Upload file to S3
       await s3
         .putObject({
-          Bucket: "cyclic-smiling-ray-neckerchief-ap-southeast-2",
+          Bucket: "cyclic-rich-rose-colt-fez-ap-south-1",
           Key: businessRegistrationCertificate[0].originalname,
           Body: businessRegistrationCertificate[0].buffer,
           ACL: 'public-read',
