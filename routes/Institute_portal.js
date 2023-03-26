@@ -199,50 +199,9 @@ router.post('/Institute_data', async (req, res) => {
   }
 });
 
-   //call through /api/User/institute/Varification_request
+  //call through /api/User/institute/Varification_request
 
-  // const storage = multer.diskStorage({
-  //   destination: function (req, file, cb) {
-  //     if (file.fieldname === "accreditationCertificate") { 
-  //       cb(null, './Uploads/Photos/Institute_varification_photos/accreditationCertificate');
-  //     } else if (file.fieldname === "businessRegistrationCertificate") {
-  //       cb(null, './Uploads/Photos/Institute_varification_photos/businessRegistrationCertificate');
-  //     } else {
-  //       console.log("There is no photo.")
-  //     }
-  //   },
-  //   filename: function (req, file, cb) {
-  //     if (file.fieldname === "accreditationCertificate") {
-  //       const fileName = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
-  //       InstituteModel.updateOne({ email: req.body.Email }, { instituteCertificate : fileName })
-  //         .then((result) => {
-  //           console.log(result);
-  //           cb(null, fileName);
-  //         })
-  //         .catch((error) => {
-  //           console.error(error);
-  //         });
-  //     } else if (file.fieldname === "businessRegistrationCertificate") {
-  //       const fileName = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
-  //       InstituteModel.updateOne({ email: req.body.Email }, { varificationPhoto : fileName })
-  //         .then((result) => {
-  //           console.log(result);
-  //           cb(null, fileName);
-  //         })
-  //         .catch((error) => {
-  //           console.error(error);
-  //           res.json([{
-  //             id : 0,
-  //             text : "Data is not inserted"
-  //           }]);
-      
-  //         });
-  //     } else {
-  //       console.log("There is no photo.")
-  //     }
-  //   }
-  // });
-  // Configure multer for handling file uploads
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
@@ -258,6 +217,7 @@ const upload = multer({
   ]),async (req,res) => {
     const accreditationCertificate = req.files.accreditationCertificate;
     const businessRegistrationCertificate = req.files.businessRegistrationCertificate;
+    const yourEmail = req.body.Email;
 
     // const file = req.files;
     console.log("fileContent")
@@ -265,14 +225,6 @@ const upload = multer({
     console.log(businessRegistrationCertificate[0].buffer)
     console.log("fileContent")
 
-    // s3.createBucket({ Bucket: "Studydoor" }, (err, data) => {
-    //   if (err) {
-    //     console.log(`Error creating bucket: ${err}`);
-    //   } else {
-    //     console.log(`Bucket created successfully: ${data.Location}`);
-    //   }
-    // });
-    // console.log(file)
     try {
 
       // Upload file to S3
@@ -298,15 +250,34 @@ const upload = multer({
         .promise();
   
       const businessRegistrationCertificateUrl = `https://studydoor.s3.amazonaws.com/${businessRegistrationCertificate[0].originalname}`;
-  
+   
 
-      // const yourEmail= req.body.Email;
-          res.json([{
-            id : 1,
-            text : "Data is Success fully inserted",
-            Url1 : accreditationCertificateUrl,
-            Url2 : businessRegistrationCertificateUrl
-          }]);
+    const filter = { email: yourEmail };
+    const update = { $set: { varificationRequest: 1 } };
+    const options = { upsert: false };
+
+    const result = await InstituteModel.updateOne(filter, update, options);
+
+    console.log(`${result.matchedCount} document(s) matched the filter criteria.`);
+    console.log(`${result.modifiedCount} document(s) was/were updated.`);
+
+    // Handle the response data here
+    if (result.modifiedCount === 1) {
+      console.log('Document updated successfully!');
+      res.json([{
+        id : 1,
+        text : "Data is Success fully inserted",
+        Url1 : accreditationCertificateUrl,
+        Url2 : businessRegistrationCertificateUrl
+      }]);
+    } else {
+      console.log('No documents were updated.');
+      res.json([{
+        id : 0,
+        text : "Error ! Data is not inserted",
+      }]);
+    }
+     
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Failed to upload image' });
@@ -314,5 +285,6 @@ const upload = multer({
     
   
   });
+
 
 module.exports = router;
