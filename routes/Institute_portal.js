@@ -9,12 +9,12 @@ const AWS = require('aws-sdk');
 
 const s3 = new AWS.S3();
 //call through /api/User/Institute_login
-
 AWS.config.update({
- accessKeyId: "ASIAYHXLJ3PA4C5L6I6B",
+  accessKeyId: "ASIAYHXLJ3PA4C5L6I6B",
   secretAccessKey: "5gzzjR/5flhxVi4CwLMCBzD4miS1fEJQ9n7W7dKP",
+  awsRegion: "ap-south-1",
+ awsSessionToken: "IQoJb3JpZ2luX2VjEDkaCmFwLXNvdXRoLTEiSDBGAiEAjQgIGLSgQj3mfNlzfxXSRShpDGylnQVXWSJq7sZ7u+8CIQC5Y51A5q+snZ2DADPY31sgr+JMAf7TOu3FyeKu6UxxHiqsAggSEAAaDDU2NjM1NTQxODA0OSIMPfwgQODXSYUy6veqKokCmfPQS63cUZVk7nrpCjYc/YK+SlhAekDd7gKp4tTmde8QvETa4Mqop+vX10fqqlddCpQQAIVR9xfMdoDR5Q4CD24LqhKfS13vVZUYSytZTTF+v/wL71sHOHmiCwDJ+KXpwEjAyI83Knl51prwx7FEjww0dZdCo12spNcxJ2gJcfJgpYIlgGpr9vWOtUCbn+iX7BmDLisMzeqCRaaIVJ2w8o+xBhxnEFOt0tKQU5EwjGes0R/+cu69dUWVe72O3AyZ3eDgFZXlQZqq+rfk6MTh2J6sH+jt21GurjvLB3Bzr0qJ7MyT+sibU8jE+FtFturLFzjuWeE2nNh/ZL+qRHLZ3fq3elp9BLafpjDkm4ChBjqcAbjw28R46dpInyhVWVEp1soU5xooIlxYTdb4GNZVV+RtyUVoqMoqwkpoTBSiZCf99+uYFnJsbriYR5dvgMTnb3GBelNjkLlu7nmxW7IgE9O8NBqsEmzdBnV4DKIfN427uEfoGzTrOGNaOJyjDU1ORGtDRR18H/hLP5ToJNdTph5RG0zb+vT2setonLKjjVFvKDhpLz/EG/Q9PVpleg=="
 });
-
 router.post("/Institute_login",async (req,res) => {
   try {
     const yourEmail = req.body.Email;
