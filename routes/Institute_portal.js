@@ -10,11 +10,11 @@ const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 //call through /api/User/Institute_login
 
-// AWS.config.update({
-//   accessKeyId: "ASIA36FQW3EGWVWSOJI4",
-//   secretAccessKey: "IyUZZuiLsvQ5RZT8lvcOdqHNL/c8/mQ7zxwyTQUf",
+AWS.config.update({
+  accessKeyId: "ASIA36FQW3EGWVWSOJI4",
+  secretAccessKey: "IyUZZuiLsvQ5RZT8lvcOdqHNL/c8/mQ7zxwyTQUf",
   
-// });
+});
 
 router.post("/Institute_login",async (req,res) => {
   try {
