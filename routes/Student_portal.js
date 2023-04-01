@@ -272,7 +272,7 @@ router.post('/Student_data', async (req, res) => {
 
 app.get('/Allcourses', async (req, res) => {
   try {
-    const courses = await Course.find();
+    const courses = await CourseModel.find();
     if(courses){
        res.json([{
           id: 1,
