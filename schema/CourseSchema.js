@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 // Define the course schema
 const CourseSchema = new mongoose.Schema({
+  email:{
+    type:String,
+    required: true
+  },
   courseName: {
     type: String,
     required: true
