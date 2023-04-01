@@ -232,18 +232,28 @@ router.post("/Forgot_Password_Set",async (req,res) => {
 });
 
 
-  //call through /api/User/All_students_data
-  
-  router.get('/All_students_data', async (req, res) => {
-    try {
-      const docs = await StudentModel.find();
-      console.log(docs);
-       res.status(200).json(docs);
-    } catch (err) {
-      console.log(err);
-       res.status(500).json({ message: 'Error fetching data' });
+//call through /api/User/Allcourses
+
+router.get('/Allcourses', async (req, res) => {
+  try {
+    const courses = await CourseModel.find();
+    if(courses){
+       res.json([{
+          id: 1,
+          data: courses,
+        }]);
+    }else{
+      res.json([{
+          id: 0,
+          data: 'No data',
+        }]);
     }
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
+
 
 //call through /api/User/Student_data
 
