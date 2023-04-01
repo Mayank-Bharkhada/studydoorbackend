@@ -1,5 +1,6 @@
 const express = require('express');
 const InstituteModel = require('../schema/InstituteSchema');
+const CourseModel = require('../schema/CourseSchema');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const mongoose = require('mongoose');
