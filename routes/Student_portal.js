@@ -1,6 +1,5 @@
 const express = require('express');
 const StudentModel = require('../schema/StudetSchema');
-const CourseModel = require('../schema/CourseSchema');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 // const mongoose = require('mongoose');
@@ -9,6 +8,7 @@ const path = require('path');
 const crypto = require('crypto');
 const sendOTP =  require('../module/Otp');
 const AWS = require('aws-sdk');
+const CourseModel = require('../schema/CourseSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -232,28 +232,18 @@ router.post("/Forgot_Password_Set",async (req,res) => {
 });
 
 
-//call through /api/User/Allcourses
-
-router.get('/Allcourses', async (req, res) => {
-  try {
-    const courses = await CourseModel.find();
-    if(courses){
-       res.json([{
-          id: 1,
-          data: courses,
-        }]);
-    }else{
-      res.json([{
-          id: 0,
-          data: 'No data',
-        }]);
+  //call through /api/User/All_students_data
+  
+  router.get('/All_students_data', async (req, res) => {
+    try {
+      const docs = await StudentModel.find();
+      console.log(docs);
+       res.status(200).json(docs);
+    } catch (err) {
+      console.log(err);
+       res.status(500).json({ message: 'Error fetching data' });
     }
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal server error');
-  }
-});
-
+  });
 
 //call through /api/User/Student_data
 
@@ -277,10 +267,10 @@ router.post('/Student_data', async (req, res) => {
     res.status(500).send(error);
   }
 });
-
+  
 //call through /api/User/Allcourses
 
-router.get('/Allcourses', async (req, res) => {
+router.get('/getAllcourses', async (req, res) => {
   try {
     const courses = await CourseModel.find();
     if(courses){
@@ -291,7 +281,7 @@ router.get('/Allcourses', async (req, res) => {
     }else{
       res.json([{
           id: 0,
-          data: 'No data,
+          data: 'No data',
         }]);
     }
   } catch (error) {
@@ -301,7 +291,7 @@ router.get('/Allcourses', async (req, res) => {
 });
 
 
- //call through /api/User/student/Varification_request
+  //call through /api/User/student/Varification_request
 
   const upload = multer({
     storage: multer.memoryStorage(),
