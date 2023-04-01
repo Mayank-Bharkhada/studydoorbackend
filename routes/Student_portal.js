@@ -270,7 +270,7 @@ router.post('/Student_data', async (req, res) => {
 
 //call through /api/User/Allcourses
 
-app.get('/Allcourses', async (req, res) => {
+router.get('/Allcourses', async (req, res) => {
   try {
     const courses = await CourseModel.find();
     if(courses){
