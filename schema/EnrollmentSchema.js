@@ -7,12 +7,14 @@ const enrollmentSchema = new Schema({
   user_id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
+    unique: false, 
     required: true
   },
   course_id: {
     type: Schema.Types.ObjectId,
     ref: 'Course',
-    required: true
+    required: true,
+    unique: true
   },
   enrollment_date: {
     type: Date,
