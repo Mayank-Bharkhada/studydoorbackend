@@ -199,6 +199,7 @@ router.post('/Institute_data', async (req, res) => {
   }
 });
 
+
 //call through /api/User/Generate_course
 
 router.post('/Generate_course', async (req, res) => {
@@ -214,16 +215,26 @@ router.post('/Generate_course', async (req, res) => {
           courseName:yourCourseName,
           department: yourDepartment,
         });
-          await Course.save();
-  
-          res.json([{
-            id : 1,
-            text : "Data is Success fully inserted"
-          }]);
+         const result =  await Course.save();
+          console.log(result);
+          if(result){
+            res.json([{
+              id : 1,
+              text : "Data is Success fully inserted"
+            }]);
+          }else{
+            res.json([{
+              id : 1,
+              text : "Sorry: Data is not inserted, plese try later . . ."
+            }]);
+          }
 
   } catch (error) {
     console.log(error);
-    res.status(500).send(error);
+    res.status(500).json([{
+      id : 0,
+      text : "There are some error"
+    }]);
   }
 });
 
