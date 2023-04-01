@@ -4,18 +4,15 @@ const mongoose = require('mongoose');
 const CourseSchema = new mongoose.Schema({
   email:{
     type:String,
-    required: true,
-    unique:false
+    required: true
   },
   courseName: {
     type: String,
-    required: true,
-    unique:false
+    required: true
   },
   department: {
     type: String,
-    required: true,
-    unique:false
+    required: true
   },
   createdAt: {
     type: Date,
