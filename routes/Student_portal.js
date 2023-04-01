@@ -1,5 +1,6 @@
 const express = require('express');
 const StudentModel = require('../schema/StudetSchema');
+const CourseModel = require('../schema/CourseSchema');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 // const mongoose = require('mongoose');
@@ -266,7 +267,30 @@ router.post('/Student_data', async (req, res) => {
     res.status(500).send(error);
   }
 });
-  
+
+//call through /api/User/Allcourses
+
+app.get('/Allcourses', async (req, res) => {
+  try {
+    const courses = await Course.find();
+    if(courses){
+       res.json([{
+          id: 1,
+          data: courses,
+        }]);
+    }else{
+      res.json([{
+          id: 0,
+          data: 'No data,
+        }]);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
  //call through /api/User/student/Varification_request
 
   const upload = multer({
