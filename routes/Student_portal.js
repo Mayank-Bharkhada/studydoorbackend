@@ -394,4 +394,62 @@ router.get('/getAllcourses', async (req, res) => {
     
     });
   
+
+//call through /api/User/Course_Enrollment
+
+router.post('/Course_Enrollment', async (req, res) => {
+  try {
+    console.log(req.body);
+      const yourEmail = req.body.Email;
+      const yourCourseEmail = req.body.CourseEmail;
+      const yourCourseName = req.body.CourseName;
+      const yourDepartment = req.body.Department;
+
+      const student = await StudentModel.findOne({ email: yourEmail }).exec();
+      console.log(student._id)
+      if (student !== null) {
+        const course = await CourseModel.findOne({ email: yourCourseEmail, courseName: yourCourseName, department: yourDepartment }).exec();
+        if (course !== null) {
+        const Enrollment = new EnrollmentModel ({
+          user_id: student._id,
+          course_id: course._id
+        });
+         const result =  await Enrollment.save();
+          console.log(result);
+          if(result){
+            res.json([{
+              id : 1,
+              text : "Data is Success fully inserted"
+            }]);
+          }else{
+            res.json([{
+              id : 1,
+              text : "Sorry: Data is not inserted, plese try later . . ."
+            }]);
+          }
+
+        } else {
+          res.status(500).json([{
+            id: 0,
+            text: "Sorry! can not enroll please try again later"
+          }]);
+        }
+      } else {
+        res.status(500).json([{
+          id: 0,
+          text: "Sorry! can not enroll please try again later"
+        }]);
+      }
+
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json([{
+      id : 0,
+      text : "There are some error"
+    }]);
+  }
+});
+
+  
 module.exports = router;
