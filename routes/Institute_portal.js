@@ -199,6 +199,34 @@ router.post('/Institute_data', async (req, res) => {
   }
 });
 
+//call through /api/User/Generate_course
+
+router.post('/Generate_course', async (req, res) => {
+  try {
+    console.log(req.body);
+      const yourEmail = req.body.Email;
+      const yourCourseName = req.body.courseName;
+      const yourDepartment = req.body.department;
+      // const yourPhone = req.body.Phone;
+  
+        const Course = new CourseModel ({
+          email: yourEmail,
+          courseName:yourCourseName,
+          department: yourDepartment,
+        });
+          await Course.save();
+  
+          res.json([{
+            id : 1,
+            text : "Data is Success fully inserted"
+          }]);
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
   //call through /api/User/institute/Varification_request
 
 
