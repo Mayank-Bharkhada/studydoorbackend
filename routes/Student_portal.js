@@ -9,6 +9,8 @@ const crypto = require('crypto');
 const sendOTP =  require('../module/Otp');
 const AWS = require('aws-sdk');
 const CourseModel = require('../schema/CourseSchema');
+const InstituteModel = require('../schema/InstituteSchema');
+const EnrollmentModel = require('../schema/EnrollmentSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -419,12 +421,12 @@ router.post('/Course_Enrollment', async (req, res) => {
           if(result){
             res.json([{
               id : 1,
-              text : "Data is Success fully inserted"
+              text : "Enmrollment is successfull"
             }]);
           }else{
             res.json([{
-              id : 1,
-              text : "Sorry: Data is not inserted, plese try later . . ."
+              id : 0,
+              text : "Sorry: Enmrollment is successfull, plese try later . . ."
             }]);
           }
 
