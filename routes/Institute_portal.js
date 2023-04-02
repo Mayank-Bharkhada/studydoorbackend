@@ -437,15 +437,11 @@ router.post('/enroll_Confirm', async (req, res) => {
   try {
       const yourEnroll_id = req.body.Enroll_id;
       // const yourPhone = req.body.Phone;
-  
+  console.log(yourEnroll_id)
       
-    const filter = { _id: yourEnroll_id };
-    const update = { $set: { confirm: 1 } };
-    const options = { upsert: false };
-    const result = await EnrollmentModel.updateOne(filter, update, options);
+    const result = await EnrollmentModel.updateOne({_id: yourEnroll_id }, { $set: { confirm: "1" } }, { upsert: false } );
 
-    console.log(`${result.matchedCount} document(s) matched the filter criteria.`);
-    console.log(`${result.modifiedCount} document(s) was/were updated.`);
+    console.log(result)
 
     // Handle the response data here
     if (result.modifiedCount === 1) {
@@ -466,7 +462,5 @@ router.post('/enroll_Confirm', async (req, res) => {
     res.status(500).send(error);
   }
 });
-
-
 
 module.exports = router;
