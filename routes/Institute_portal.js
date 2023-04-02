@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const multer = require('multer');
 const AWS = require('aws-sdk');
+const EnrollmentModel = require('../schema/EnrollmentSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -354,5 +355,36 @@ const upload = multer({
   
   });
 
+ //call through /api/User/getAllEnrollments
+
+router.post('/getAllEnrollments', async (req, res) => {
+  try {
+    console.log(req.body);
+      const yourEmail = req.body.Email;
+      // const yourPhone = req.body.Phone;
+  
+      const institute = await InstituteModel.findOne({ email: yourEmail }).exec();
+      if (institute !== null) {
+        const enrollments = await EnrollmentModel.find({ institute_id : institute._id }).exec();
+        if(enrollments !== null){
+          res.send(enrollments);
+        }else{
+          res.json([{
+            id: 0,
+            text: "No data Found",
+          }]);
+        }
+      }else{
+        res.json([{
+          id: 0,
+          text: "No data Found",
+        }]);
+      }
+     
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
 
 module.exports = router;
