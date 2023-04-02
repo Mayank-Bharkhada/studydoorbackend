@@ -4,13 +4,26 @@ const Schema = mongoose.Schema;
 
 // Define the enrollment schema
 const enrollmentSchema = new Schema({
-  user_id: {
+  student_id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     unique: false, 
     required: true
-  }, 
- institute_id: {
+  },
+  studentName: {
+    type: String,
+    ref: 'User',
+    unique: false, 
+    required: true
+  },
+  studentProfilePic: {
+    type: String,
+    ref: 'User',
+    unique: false, 
+    default:null,
+    required: true
+  },
+  institute_id: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     unique: false, 
