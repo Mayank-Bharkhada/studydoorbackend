@@ -177,6 +177,28 @@ router.get('/All_institutes_data', (req, res) => {
     });
 });
 
+//call through /api/User/institute_data_by_id
+
+router.post('/institute_data_by_id', async (req, res) => {
+  try {
+      const youtInstitute_id = req.body.Institute_id;
+      // const yourPhone = req.body.Phone;
+  
+      const result = await InstituteModel.findOne({ _id: youtInstitute_id }).exec();
+      if (result !== null) {
+        res.send(result);
+      }else{
+        res.json([{
+          id: 0,
+          text: "No data Found",
+        }]);
+      }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 //call through /api/User/Institute_data
 
 router.post('/Institute_data', async (req, res) => {
