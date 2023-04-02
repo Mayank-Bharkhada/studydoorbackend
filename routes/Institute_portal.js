@@ -391,10 +391,10 @@ router.post('/getAllEnrollments', async (req, res) => {
 
 router.post('/course_data_by_id', async (req, res) => {
   try {
-      const youtCourse_id = req.body.Course_id;
+      const yourCourse_id = req.body.Course_id;
       // const yourPhone = req.body.Phone;
   
-      const result = await CourseModel.findOne({ _id: youtInstitute_id }).exec();
+      const result = await CourseModel.findOne({ _id: yourCourse_id }).exec();
       if (result !== null) {
         res.send(result);
       }else{
