@@ -9,6 +9,12 @@ const enrollmentSchema = new Schema({
     ref: 'User',
     unique: false, 
     required: true
+  }, 
+ institute_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    unique: false, 
+    required: true
   },
   course_id: {
     type: Schema.Types.ObjectId,
