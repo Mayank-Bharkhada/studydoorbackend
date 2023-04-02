@@ -409,5 +409,28 @@ router.post('/course_data_by_id', async (req, res) => {
   }
 });
 
+//call through /api/User/enroll_data_by_id
+
+router.post('/enroll_data_by_id', async (req, res) => {
+  try {
+      const yourEnroll_id = req.body.Enroll_id;
+      // const yourPhone = req.body.Phone;
+  
+      const result = await EnrollmentModel.findOne({ _id: yourEnroll_id }).exec();
+      if (result !== null) {
+        res.send(result);
+      }else{
+        res.json([{
+          id: 0,
+          text: "No data Found",
+        }]);
+      }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+
 
 module.exports = router;
