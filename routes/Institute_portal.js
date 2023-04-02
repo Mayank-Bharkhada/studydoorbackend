@@ -431,6 +431,42 @@ router.post('/enroll_data_by_id', async (req, res) => {
   }
 });
 
+//call through /api/User/enroll_Confirm
+
+router.post('/enroll_Confirm', async (req, res) => {
+  try {
+      const yourEnroll_id = req.body.Enroll_id;
+      // const yourPhone = req.body.Phone;
+  
+      
+    const filter = { _id: yourEnroll_id };
+    const update = { $set: { confirm: 1 } };
+    const options = { upsert: false };
+    const result = await EnrollmentModel.updateOne(filter, update, options);
+
+    console.log(`${result.matchedCount} document(s) matched the filter criteria.`);
+    console.log(`${result.modifiedCount} document(s) was/were updated.`);
+
+    // Handle the response data here
+    if (result.modifiedCount === 1) {
+      console.log('Document updated successfully!');
+      res.json([{
+        id : 1,
+        data : "Enrollment is confirmed"
+      }]);
+    } else {
+      res.json([{
+        id : 0,
+        text : "Enrollment is not confirmed",
+      }]);
+    }
+     
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 
 
 module.exports = router;
