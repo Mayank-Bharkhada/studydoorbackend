@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 
 // Define the course schema
 const CourseSchema = new mongoose.Schema({
-  email:{
-    type:String,
-    required: true
+  instituteId:{
+    type: Schema.Types.ObjectId,
+    ref: 'Institute',
+    required: true,
+    unique: false
   },
   courseName: {
     type: String,
@@ -12,11 +14,13 @@ const CourseSchema = new mongoose.Schema({
   },
   department: {
     type: String,
-    required: true
+    required: true,
+    unique: true  
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    required:true
   }
 });
 
