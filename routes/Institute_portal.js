@@ -200,7 +200,6 @@ router.post('/Institute_data', async (req, res) => {
   }
 });
 
-
 //call through /api/User/Generate_course
 
 router.post('/Generate_course', async (req, res) => {
@@ -211,25 +210,33 @@ router.post('/Generate_course', async (req, res) => {
       const yourDepartment = req.body.department;
       // const yourPhone = req.body.Phone;
   
-        const Course = new CourseModel ({
-          email: yourEmail,
-          courseName:yourCourseName,
-          department: yourDepartment,
-        });
-         const result =  await Course.save();
-          console.log(result);
-          if(result){
-            res.json([{
-              id : 1,
-              text : "Data is Success fully inserted"
-            }]);
-          }else{
-            res.json([{
-              id : 1,
-              text : "Sorry: Data is not inserted, plese try later . . ."
-            }]);
-          }
-
+      
+    const doc = await InstituteModel.findOne({ email: yourEmail });
+    if (!doc) {
+      res.json([{
+        id : 0,
+        text : "Sorry: Data is not inserted, plese try later . . ."
+      }]);
+    } else {
+      const Course = new CourseModel ({
+        instituteId: doc._id,
+        courseName:yourCourseName,
+        department: yourDepartment,
+      });
+       const result =  await Course.save();
+        console.log(result);
+        if(result){
+          res.json([{
+            id : 1,
+            text : "Data is Success fully inserted"
+          }]);
+        }else{
+          res.json([{
+            id : 0,
+            text : "Sorry: Data is not inserted, plese try later . . ."
+          }]);
+        }
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json([{
@@ -239,16 +246,6 @@ router.post('/Generate_course', async (req, res) => {
   }
 });
 
-  //call through /api/User/institute/Varification_request
-
-
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 5 * 1024 * 1024, // Limit file size to 5 MB
-  },
-});
-  
   // const upload = multer({ storage: storage });
 
   router.post("/institute/Varification_request",  upload.fields([
