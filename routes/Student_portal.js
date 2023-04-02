@@ -403,17 +403,18 @@ router.post('/Course_Enrollment', async (req, res) => {
   try {
     console.log(req.body);
       const yourEmail = req.body.Email;
-      const yourCourseEmail = req.body.CourseEmail;
+      const yourInstitute_id = req.body.Institute_id;
       const yourCourseName = req.body.CourseName;
       const yourDepartment = req.body.Department;
 
       const student = await StudentModel.findOne({ email: yourEmail }).exec();
       console.log(student._id)
       if (student !== null) {
-        const course = await CourseModel.findOne({ email: yourCourseEmail, courseName: yourCourseName, department: yourDepartment }).exec();
+        const course = await CourseModel.findOne({ institute_id: yourInstitute_id, courseName: yourCourseName, department: yourDepartment }).exec();
         if (course !== null) {
         const Enrollment = new EnrollmentModel ({
           user_id: student._id,
+          institute_id: yourInstitute_id,
           course_id: course._id
         });
          const result =  await Enrollment.save();
