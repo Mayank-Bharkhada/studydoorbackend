@@ -21,7 +21,7 @@ const enrollmentSchema = new Schema({
     ref: 'User',
     unique: false, 
     default:null,
-    required: true
+    required: false
   },
   institute_id: {
     type: Schema.Types.ObjectId,
