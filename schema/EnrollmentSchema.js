@@ -12,16 +12,14 @@ const enrollmentSchema = new Schema({
   },
   studentName: {
     type: String,
-    ref: 'User',
     unique: false, 
     required: true
   },
   studentProfilePic: {
     type: String,
-    ref: 'User',
     unique: false, 
     default:null,
-    required: false
+    required: true
   },
   institute_id: {
     type: Schema.Types.ObjectId,
@@ -32,6 +30,17 @@ const enrollmentSchema = new Schema({
   course_id: {
     type: Schema.Types.ObjectId,
     ref: 'Course',
+    required: true,
+    unique: true
+  },
+  courseName: {
+    type: String,
+    ref: 'Course',
+    required: true,
+    unique: true
+  },
+  courseDepartment: {
+    type: String,
     required: true,
     unique: true
   },
