@@ -19,7 +19,7 @@ const enrollmentSchema = new Schema({
     type: String,
     unique: false, 
     default:null,
-    required: true
+    required: false
   },
   institute_id: {
     type: Schema.Types.ObjectId,
