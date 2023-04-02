@@ -396,6 +396,7 @@ router.get('/getAllcourses', async (req, res) => {
     
     });
   
+
 //call through /api/User/Course_Enrollment
 
 router.post('/Course_Enrollment', async (req, res) => {
@@ -404,14 +405,20 @@ router.post('/Course_Enrollment', async (req, res) => {
       const yourEmail = req.body.Email;
       const yourInstitute_id = req.body.Institute_id;
       const yourCourse_id = req.body.Course_id;
+      const yourCourseName= req.body.CourseName;
+      const yourCourseDepartment = req.body.CourseDepartment;
 
       const student = await StudentModel.findOne({ email: yourEmail }).exec();
       console.log(student._id)
       if (student !== null) {
         const Enrollment = new EnrollmentModel ({
-          user_id: student._id,
+          student_id: student._id,
+          studentName: student.name,
+          studentProfilePic: student.profilePhoto,
           institute_id: yourInstitute_id,
           course_id: yourCourse_id,
+          courseName: yourCourseName,
+          courseDepartment: yourCourseDepartment
         });
          const result =  await Enrollment.save();
           console.log(result);
@@ -443,7 +450,6 @@ router.post('/Course_Enrollment', async (req, res) => {
   }
 });
 
-  
 
   
 module.exports = router;
