@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 // Define the course schema
 const CourseSchema = new mongoose.Schema({
-  instituteId:{
+  institute_id:{
     type: Schema.Types.ObjectId,
     ref: 'Institute',
     required: true,
