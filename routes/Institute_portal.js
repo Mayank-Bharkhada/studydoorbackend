@@ -387,4 +387,27 @@ router.post('/getAllEnrollments', async (req, res) => {
   }
 });
 
+//call through /api/User/course_data_by_id
+
+router.post('/course_data_by_id', async (req, res) => {
+  try {
+      const youtCourse_id = req.body.Course_id;
+      // const yourPhone = req.body.Phone;
+  
+      const result = await CourseModel.findOne({ _id: youtInstitute_id }).exec();
+      if (result !== null) {
+        res.send(result);
+      }else{
+        res.json([{
+          id: 0,
+          text: "No data Found",
+        }]);
+      }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+
 module.exports = router;
