@@ -219,7 +219,7 @@ router.post('/Generate_course', async (req, res) => {
       }]);
     } else {
       const Course = new CourseModel ({
-        instituteId: doc._id,
+       institute_id: doc._id,
         courseName:yourCourseName,
         department: yourDepartment,
       });
