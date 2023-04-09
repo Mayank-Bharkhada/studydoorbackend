@@ -417,7 +417,7 @@ router.post('/course_data_by_institute_id', async (req, res) => {
       const youInstituterId = req.body.InstituteId;
       // const yourPhone = req.body.Phone;
   
-      const result = await InstituteModel.find({ institute_id: youInstituterId }).exec();
+      const result = await CourseModel.find({ institute_id: youInstituterId }).exec();
       if (result !== null) {
         res.send(result);
       }else{
