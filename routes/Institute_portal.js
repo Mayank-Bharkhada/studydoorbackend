@@ -409,6 +409,30 @@ router.post('/course_data_by_id', async (req, res) => {
   }
 });
 
+//call through /api/User/course_data_by_institute_id
+
+router.post('/course_data_by_institute_id', async (req, res) => {
+  try {
+    console.log(req.body);
+      const youInstituterId = req.body.InstituteId;
+      // const yourPhone = req.body.Phone;
+  
+      const result = await InstituteModel.find({ institute_id: youInstituterId }).exec();
+      if (result !== null) {
+        res.send(result);
+      }else{
+        res.json([{
+          id: 0,
+          text: "No data Found",
+        }]);
+      }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+
 //call through /api/User/enroll_data_by_id
 
 router.post('/enroll_data_by_id', async (req, res) => {
