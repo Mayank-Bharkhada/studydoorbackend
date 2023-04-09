@@ -355,6 +355,62 @@ const upload = multer({
   
   });
 
+
+  //call through /api/User/Upload_books
+
+  router.post("/Upload_books",  upload.fields([
+    { name: 'Book', maxCount: 1 },
+  ]),async (req,res) => {
+    const Book = req.files.Book;
+    const CourseName = req.files.CourseName;
+    const Department = req.files.Department;
+    const Semester = req.files.Semester;
+    const InstituteId = req.files.InstituteId;
+
+
+    // const file = req.files;
+    console.log("fileContent")
+    console.log(Book[0].buffer)
+    console.log("fileContent")
+
+    try {
+
+      // Upload file to S3
+      await s3
+        .putObject({
+          Bucket: "studydoor",
+          Key: Book[0].originalname,
+          Body: Book[0].buffer,
+          ACL: 'public-read',
+        })
+        .promise();
+  
+      const bookUrl = `https://studydoor.s3.amazonaws.com/${Book[0].originalname}`;
+  
+      const Institute = new CourseModel ({
+        institute_id: InstituteId,
+        courseName: CourseName,
+        department: Department,
+        semester: Semester,
+        BookUri: Book[0].originalname
+      });
+        await Institute.save();
+  
+        console.log(Institute);
+   
+    // Handle the response data here
+    res.json([{
+          id : 1,
+          text : "Book uploaded successfully ",
+          Url1 : bookUrl
+        }]);
+        
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to upload image' });
+    }
+  });
+
  //call through /api/User/getAllEnrollments
 
 router.post('/getAllEnrollments', async (req, res) => {
