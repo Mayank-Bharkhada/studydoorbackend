@@ -8,6 +8,7 @@ const path = require('path');
 const multer = require('multer');
 const AWS = require('aws-sdk');
 const EnrollmentModel = require('../schema/EnrollmentSchema');
+const BookModel = require('../schema/BookSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
