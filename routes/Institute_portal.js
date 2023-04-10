@@ -356,16 +356,18 @@ const upload = multer({
   });
 
 
+ 
   //call through /api/User/Upload_books
 
   router.post("/Upload_books",  upload.fields([
     { name: 'Book', maxCount: 1 },
   ]),async (req,res) => {
     const Book = req.files.Book;
-    const CourseName = req.files.CourseName;
-    const Department = req.files.Department;
-    const Semester = req.files.Semester;
-    const InstituteId = req.files.InstituteId;
+    const BookName = req.body.BookName;
+    const CourseName = req.body.CourseName;
+    const Department = req.body.Department;
+    const Semester = req.body.Semester;
+    const InstituteId = req.body.InstituteId;
 
 
     // const file = req.files;
@@ -387,7 +389,8 @@ const upload = multer({
   
       const bookUrl = `https://studydoor.s3.amazonaws.com/${Book[0].originalname}`;
   
-      const Institute = new CourseModel ({
+      const Institute = new BookModel({
+        bookName:BookName,
         institute_id: InstituteId,
         courseName: CourseName,
         department: Department,
@@ -410,6 +413,7 @@ const upload = multer({
       res.status(500).json({ error: 'Failed to upload image' });
     }
   });
+
 
  //call through /api/User/getAllEnrollments
 
