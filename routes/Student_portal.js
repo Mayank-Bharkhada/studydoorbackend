@@ -11,6 +11,7 @@ const AWS = require('aws-sdk');
 const CourseModel = require('../schema/CourseSchema');
 const InstituteModel = require('../schema/InstituteSchema');
 const EnrollmentModel = require('../schema/EnrollmentSchema');
+const BookModel = require('../schema/BookSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -279,6 +280,37 @@ router.get('/getAllcourses', async (req, res) => {
        res.json([{
           id: 1,
           data: courses,
+        }]);
+    }else{
+      res.json([{
+          id: 0,
+          data: 'No data',
+        }]);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
+//call through /api/User/fetch_all_books_by_users_id
+
+router.post('/fetch_all_books_by_users_id', async (req, res) => {
+  try {
+    
+    const Student_id = req.body.Student_id;
+
+    const Enrollment = await EnrollmentModel.findOne({student_id: Student_id,confirm: 1});
+    if(Enrollment){
+      console.log(Enrollment.institute_id);
+      console.log(Enrollment.courseDepartment);
+      console.log(Enrollment.courseName);
+      const Books = await BookModel.find({institute_id: Enrollment.institute_id,courseName:Enrollment.courseName,department:Enrollment.courseDepartment});
+      console.log(Books);
+       res.json([{
+          id: 1,
+          data: Books,
         }]);
     }else{
       res.json([{
