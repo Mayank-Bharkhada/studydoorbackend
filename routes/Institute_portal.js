@@ -432,7 +432,7 @@ const upload = multer({
       // Upload file to S3
       await s3
         .putObject({
-          Bucket: 'my-bucket-name',
+          Bucket: 'studydoor',
           Key: Video[0].originalname,
           Body: Video[0].buffer,
           ACL: 'public-read',
@@ -443,7 +443,7 @@ const upload = multer({
 
       await s3
         .putObject({
-          Bucket: 'my-bucket-name',
+          Bucket: 'studydoor',
           Key: Thumbnail[0].originalname,
           Body: Thumbnail[0].buffer,
           ACL: 'public-read',
