@@ -439,7 +439,7 @@ const upload = multer({
         })
         .promise();
   
-      const videoUrl = `https://my-bucket-name.s3.amazonaws.com/${Video[0].originalname}`;
+      const videoUrl = `https://studydoor.s3.amazonaws.com/${Video[0].originalname}`;
 
       await s3
         .putObject({
@@ -450,7 +450,7 @@ const upload = multer({
         })
         .promise();
   
-      const thumbnailUrl = `https://my-bucket-name.s3.amazonaws.com/${Thumbnail[0].originalname}`;
+      const thumbnailUrl = `https://studydoor.s3.amazonaws.com/${Thumbnail[0].originalname}`;
   
       const Institute = new VideoModel({
         bookName:title,
