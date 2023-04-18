@@ -453,7 +453,7 @@ const upload = multer({
       const thumbnailUrl = `https://studydoor.s3.amazonaws.com/${Thumbnail[0].originalname}`;
   
       const Institute = new VideoModel({
-        bookName:title,
+        title:title,
         institute_id: InstituteId,
         course: course,
         description:description,
