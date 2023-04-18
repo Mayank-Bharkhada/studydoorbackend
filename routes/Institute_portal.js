@@ -9,6 +9,7 @@ const multer = require('multer');
 const AWS = require('aws-sdk');
 const EnrollmentModel = require('../schema/EnrollmentSchema');
 const BookModel = require('../schema/BookSchema');
+const VideoModel = require('../schema/VideoSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -412,6 +413,64 @@ const upload = multer({
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Failed to upload image' });
+    }
+  });
+
+
+//call through /api/User/Upload_videos
+
+  router.post('/Upload_videos', upload.fields([
+    { name: 'Video', maxCount: 1 },
+    { name: 'Thumbnail', maxCount: 1 },
+  ]), async (req, res) => {
+    const { department, course, semester, title,description , InstituteId} = req.body;
+   
+    const Video = req.file.Video;
+    const Thumbnail = req.file.Video;
+  
+    try {
+      // Upload file to S3
+      await s3
+        .putObject({
+          Bucket: 'my-bucket-name',
+          Key: Video[0].originalname,
+          Body: Video[0].buffer,
+          ACL: 'public-read',
+        })
+        .promise();
+  
+      const videoUrl = `https://my-bucket-name.s3.amazonaws.com/${Video[0].originalname}`;
+
+      await s3
+        .putObject({
+          Bucket: 'my-bucket-name',
+          Key: Thumbnail[0].originalname,
+          Body: Thumbnail[0].buffer,
+          ACL: 'public-read',
+        })
+        .promise();
+  
+      const thumbnailUrl = `https://my-bucket-name.s3.amazonaws.com/${Thumbnail[0].originalname}`;
+  
+      const Institute = new VideoModel({
+        bookName:title,
+        institute_id: InstituteId,
+        course: course,
+        description:description,
+        department: department,
+        semester: semester,
+        videoUrl: Video[0].originalname,
+        thumbnailUrl: Thumbnail[0].originalname
+      });
+        await Institute.save();
+  
+   
+        
+      // Handle the response data here
+      res.json([{ id: 1, text: 'Video uploaded successfully', videoUrl: videoUrl,thumbnailUrl:thumbnailUrl }]);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({id: 0, error: 'Failed to upload video' });
     }
   });
 
