@@ -26,10 +26,6 @@ const VideoSchema = new mongoose.Schema({
   description: {
     type: String
   },
-  duration: {
-    type: Number,
-    required: true
-  },
   videoUrl: {
     type: String,
     required: true
