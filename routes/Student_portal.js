@@ -12,6 +12,7 @@ const CourseModel = require('../schema/CourseSchema');
 const InstituteModel = require('../schema/InstituteSchema');
 const EnrollmentModel = require('../schema/EnrollmentSchema');
 const BookModel = require('../schema/BookSchema');
+const VideoModel = require('../schema/VideoSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -319,6 +320,38 @@ router.post('/fetch_all_books_by_users_id', async (req, res) => {
         }]);
     }
   } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
+
+
+
+//call through /api/User/fetch_all_videos_by_users_id
+
+router.post('/fetch_all_videos_by_users_id', async (req, res) => {
+  try {
+    
+    const Student_id = req.body.Student_id;
+
+    const Enrollment = await EnrollmentModel.findOne({student_id: Student_id,confirm: 1});
+    if(Enrollment){
+      console.log(Enrollment.institute_id);
+      console.log(Enrollment.courseDepartment);
+      console.log(Enrollment.courseName);
+      const Videos = await VideoModel.find({institute_id: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
+      console.log(Videos);
+       res.json([{
+          id: 1,
+          data: Videos,
+        }]);
+    }else{
+      res.json([{
+          id: 0,
+          data: 'No data',
+        }]);
+    }
+  } catch (error) { 
     console.error(error);
     res.status(500).send('Internal server error');
   }
