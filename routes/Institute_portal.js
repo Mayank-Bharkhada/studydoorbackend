@@ -425,8 +425,8 @@ const upload = multer({
   ]), async (req, res) => {
     const { department, course, semester, title,description , InstituteId} = req.body;
    
-    const Video = req.file.Video;
-    const Thumbnail = req.file.Video;
+    const Video = req.files.Video;
+    const Thumbnail = req.files.Video;
   
     try {
       // Upload file to S3
