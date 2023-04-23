@@ -10,6 +10,7 @@ const AWS = require('aws-sdk');
 const EnrollmentModel = require('../schema/EnrollmentSchema');
 const BookModel = require('../schema/BookSchema');
 const VideoModel = require('../schema/VideoSchema');
+const QuestionModel = require('../schema/QuestionSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -416,6 +417,32 @@ const upload = multer({
     }
   });
 
+ //call through /api/User/Generate_quiz
+
+router.post('/Generate_quiz', async (req, res) => {
+  try {
+    const { questions, title, course, department, semester, instituteId, startTime, endTime, examDate } = req.body;
+
+    const newQuestion = new QuestionModel({
+      institute_id: instituteId,
+      course: course,
+      department: department,
+      semester: semester,
+      title: title,
+      question: questions,
+      startTime: startTime,
+      endTime: endTime,
+      examDate: examDate
+    });
+
+    const savedQuestion = await newQuestion.save();
+
+    res.status(201).json({ message: 'Question created successfully', question: savedQuestion });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 //call through /api/User/Upload_videos
 
