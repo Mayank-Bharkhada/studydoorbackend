@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 const QuestionSchema = new mongoose.Schema({
     institute_id: {
       type: Schema.Types.ObjectId,
@@ -59,3 +62,6 @@ const QuestionSchema = new mongoose.Schema({
     }
   });
   
+  // Create a new model based on the enrollment schema and export it
+const QuestionModel = mongoose.model('Question', QuestionSchema);
+module.exports = QuestionModel;
