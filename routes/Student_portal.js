@@ -390,7 +390,6 @@ router.post('/fetch_all_videos_by_users_id', async (req, res) => {
 });
 
 
-
 //call through /api/User/fetch_all_lectures_by_users_id
 
 router.post('/fetch_all_lectures_by_users_id', async (req, res) => {
@@ -403,11 +402,11 @@ router.post('/fetch_all_lectures_by_users_id', async (req, res) => {
       console.log(Enrollment.institute_id);
       console.log(Enrollment.courseDepartment);
       console.log(Enrollment.courseName);
-      const Videos = await LectureModel.find({institute_id: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
-      console.log(Videos);
+      const Lectures = await LectureModel.find({instituteId: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
+      console.log(Lectures);
        res.json([{
           id: 1,
-          data: Videos,
+          data: Lectures,
         }]);
     }else{
       res.json([{
