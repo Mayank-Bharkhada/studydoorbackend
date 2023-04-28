@@ -58,5 +58,5 @@ const LectureSchema = new mongoose.Schema({
 
 
 // Create a Course model using the schema
-const LectureModel = mongoose.model('Book', LectureSchema);
+const LectureModel = mongoose.model('Lacture', LectureSchema);
 module.exports = LectureModel;
