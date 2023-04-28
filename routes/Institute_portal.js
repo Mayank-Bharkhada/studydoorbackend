@@ -700,29 +700,7 @@ router.post('/lactures_data_by_institute_id_for_institute', async (req, res) => 
 });
 
 
-//call through /api/User/lactures_data_by_institute_id_for_institute
 
-router.post('/lactures_data_by_institute_id_for_institute', async (req, res) => {
-  try {
-    
-    const InstituteId = req.body.InstituteId;
-
- 
-      // console.log(Enrollment.institute_id);
-      // console.log(Enrollment.courseDepartment);
-      // console.log(Enrollment.courseName);
-      const Lectures = await LectureModel.find({instituteId: InstituteId});
-      console.log(Lectures);
-       res.json([{
-          id: 1,
-          data: Lectures,
-        }]);
- 
-  } catch (error) { 
-    console.error(error);
-    res.status(500).send('Internal server error');
-  }
-});
 
 
 
