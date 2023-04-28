@@ -11,6 +11,7 @@ const EnrollmentModel = require('../schema/EnrollmentSchema');
 const BookModel = require('../schema/BookSchema');
 const VideoModel = require('../schema/VideoSchema');
 const QuestionModel = require('../schema/QuestionSchema');
+const LectureModel = require('../schema/LectureSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -633,5 +634,46 @@ router.post('/enroll_Confirm', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+router.post('/Generate_lacture', async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      course,
+      department,
+      semester,
+      instituteId,
+      startTime,
+      endTime,
+      examDate
+    } = req.body;
+
+    // Create a new lecture object using the data from the request body
+    const newLecture = new LectureModel({
+      title,
+      description,
+      course,
+      department,
+      semester,
+      instituteId,
+      startTime,
+      endTime,
+      examDate,
+      ChannalName: "test",
+      ChannalToken:"007eJxTYLBmMbf7q3XqXvHV5uszDcz2PIia1NkhvMWk2iL23zOpXXkKDMZJBknGFgYWBqlpKSZmiUYWyRZJ5qbGFubJZmapFmlpW8I9UxoCGRlWCu5lZmSAQBCfhaEktbiEgQEAVuUfng==",
+    });
+
+
+    // Save the new lecture object to the database
+    await newLecture.save();
+    // Send a success response
+    res.status(200).json([{ id: 1, text: 'Lecture created successfully.' }]);
+  } catch (error) {
+    console.error('Error adding lecture to server:', error);
+    res.status(500).json([{ id: 0, text: 'Error adding lecture to server.' }]);
+  }
+});
+
 
 module.exports = router;
