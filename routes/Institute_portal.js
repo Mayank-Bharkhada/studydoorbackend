@@ -12,6 +12,7 @@ const BookModel = require('../schema/BookSchema');
 const VideoModel = require('../schema/VideoSchema');
 const QuestionModel = require('../schema/QuestionSchema');
 const LectureModel = require('../schema/LectureSchema');
+const FacultyModel = require('../schema/FacultySchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -703,7 +704,24 @@ router.post('/lactures_data_by_institute_id_for_institute', async (req, res) => 
   }
 });
 
-
+router.post('/create_faculty_account', async (req, res) => {
+  try {
+    const faculty = new FacultyModel({
+      institute_id: req.body.institute_id,
+      fullName: req.body.fullName,
+      number: req.body.number,
+      course: req.body.course,
+      department: req.body.department,
+      userName: req.body.userName,
+      userUuid: req.body.userUuid
+    });
+    const savedFaculty = await faculty.save();
+    res.json(savedFaculty);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
 
 
 
