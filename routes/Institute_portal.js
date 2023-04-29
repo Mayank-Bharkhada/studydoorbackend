@@ -704,25 +704,48 @@ router.post('/lactures_data_by_institute_id_for_institute', async (req, res) => 
   }
 });
 
-router.post('/create_faculty_account', async (req, res) => {
+router.post('/creaate_faculty_account', async (req, res) => {
   try {
-    const faculty = new FacultyModel({
-      institute_id: req.body.institute_id,
-      fullName: req.body.fullName,
-      number: req.body.number,
-      course: req.body.course,
-      department: req.body.department,
-      userName: req.body.userName,
-      userUuid: req.body.userUuid
+    const {
+      institute_id,
+      fullName,
+      number,
+      course,
+      department,
+      userName,
+      userUuid,
+      email,
+      password
+    } = req.body;
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const faculty = new Faculty({
+      institute_id,
+      fullName,
+      number,
+      course,
+      department,
+      userName,
+      userUuid,
+      email,
+      password: hashedPassword
     });
+
     const savedFaculty = await faculty.save();
-    res.json(savedFaculty);
+    res.json([{
+      id : 1,
+      text : "Data is Success fully inserted"
+    }]);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server error');
+    res.status(500).json([{
+      id : 0,
+      text : "Server Error"
+    }]);
   }
 });
-
 
 
 
