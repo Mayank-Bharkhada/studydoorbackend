@@ -906,7 +906,7 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
           if(enrollments !== null){
             res.json([{
               id: 1,
-              text: enrollments,
+              data: enrollments,
             }]);
           }else{
             res.json([{
