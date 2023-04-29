@@ -71,6 +71,14 @@ const InstituteSchema = new mongoose.Schema({
     required: false,
     default: 0,
   },
+  UserName: {
+    type: String,
+    required: true,
+  },
+  UserUuid: {
+    type: String,
+    required: true,
+  },
 });
 
 const InstituteModel = mongoose.model("Institute", InstituteSchema);
