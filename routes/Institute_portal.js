@@ -797,5 +797,54 @@ router.post("/Faculty_login",async (req,res) => {
       }
 });
 
+//call through /api/User/Faculty_data
+
+router.post('/Faculty_data', async (req, res) => {
+  try {
+    console.log(req.body);
+      const yourEmail = req.body.Email;
+      // const yourPhone = req.body.Phone;
+  
+      const result = await FacultyModel.findOne({ email: yourEmail }).exec();
+      if (result !== null) {
+        res.send(result);
+      }else{
+        res.json([{
+          id: 0,
+          text: "No data Found",
+        }]);
+      }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+//call through /api/User/lactures_data_by_institute_id_for_faculty
+
+router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
+  try {
+    
+    const InstituteId = req.body.InstituteId;
+    const course = req.body.course;
+    const department = req.body.department;
+
+ 
+      // console.log(Enrollment.institute_id);
+      // console.log(Enrollment.courseDepartment);
+      // console.log(Enrollment.courseName);
+      const Lectures = await LectureModel.find({instituteId: InstituteId,  course: course, department: department});
+      console.log(Lectures);
+       res.json([{
+          id: 1,
+          data: Lectures,
+        }]);
+ 
+  } catch (error) { 
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
+
 
 module.exports = router;
