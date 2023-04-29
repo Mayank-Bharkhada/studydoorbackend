@@ -721,7 +721,7 @@ router.post('/creaate_faculty_account', async (req, res) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const faculty = new Faculty({
+    const faculty = new FacultyModel({
       institute_id,
       fullName,
       number,
