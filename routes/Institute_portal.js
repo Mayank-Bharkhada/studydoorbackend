@@ -869,6 +869,30 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
   }
 });
 
+  //call through /api/User/getAllConfirmEnrollments
 
+  router.post('/getAllConfirmEnrollments', async (req, res) => {
+    try {
+      console.log(req.body);
+        const yourInstitute_id = req.body.institute_id;
+     
+          const enrollments = await EnrollmentModel.find({ institute_id: yourInstitute_id, confirm: 1 }).exec();
+          if(enrollments !== null){
+            res.send(enrollments);
+          }else{
+            res.json([{
+              id: 0,
+              text: "No data Found",
+            }]);
+          }
+     
+       
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  });
+
+  
 
 module.exports = router;
