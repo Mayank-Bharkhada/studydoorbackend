@@ -332,6 +332,30 @@ router.post('/fetch_all_books_by_users_id', async (req, res) => {
   }
 });
 
+//call through /api/User/fetch_enrollment_data_by_student_id
+
+router.post('/fetch_enrollment_data_by_student_id', async (req, res) => {
+  try {
+    
+    const Student_id = req.body.Student_id;
+
+    const Enrollment = await EnrollmentModel.findOne({student_id: Student_id,confirm: 1,completion_date: null});
+    if(Enrollment){
+       res.json([{
+          id: 1,
+          data: Enrollment,
+        }]);
+    }else{
+      res.json([{
+          id: 0,
+          data: 'No data',
+        }]);
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal server error');
+  }
+});
 
 
 //call through /api/User/fetch_all_quiz_by_users_id
