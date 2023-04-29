@@ -141,6 +141,8 @@ router.post("/Institute_registration",async (req,res) => {
       const yourState = req.body.State; 
       const yourCountry = req.body.Country; 
       const yourPincode = req.body.Pincode; 
+      const YourUserName = req.body.UserName;
+      const YourUserUuid = req.body.UserUuid; 
       
       const salt = await bcrypt.genSalt(saltRounds);
       const Password = await bcrypt.hash(yourPassword, salt);
@@ -153,8 +155,10 @@ router.post("/Institute_registration",async (req,res) => {
           address: yourAddress,
           city: yourCity ,
           state: yourState ,
-          country: yourCountry ,
-          pincode: yourPincode ,
+          country: yourCountry,
+          pincode: yourPincode,
+          UserName: YourUserName,
+          UserUuid: YourUserUuid
         });
           await Institute.save();
     
