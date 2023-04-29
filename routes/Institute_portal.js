@@ -748,5 +748,54 @@ router.post('/creaate_faculty_account', async (req, res) => {
 });
 
 
+//call through /api/User/Faculty_login
+router.post("/Faculty_login",async (req,res) => {
+  try {
+    const yourEmail = req.body.Email;
+    const yourPassword = req.body.Password; 
+    const doc = await FacultyModel.findOne({ email: yourEmail });
+    if (!doc) {
+      return res.status(404).send('No user found');
+    } else {
+      // console.log(doc);
+      const hashedPassword = doc.password;
+    
+      if(yourEmail == doc.email){
+       bcrypt.compare(yourPassword, hashedPassword, (err, result) => {
+         if (result) {
+           console.log(result);
+           res.json([{
+             id : 1,
+             text : "We welcome you faculty."
+           }]);
+         } else if (err) {
+           console.log(err);
+           res.json([{
+               id : 0,
+               text : "Enter valid details"
+             }]);
+         } else {
+           res.json([{
+             id : 0,
+             text : "Enter valid details"
+           }]);
+         }
+        } );
+          
+         }else{
+          res.json([{
+              id : 0,
+              text : "Enter valid details"
+            }]);
+        }
+      
+    }
+ 
+       } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+      }
+});
+
 
 module.exports = router;
