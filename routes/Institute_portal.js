@@ -796,7 +796,6 @@ router.post("/Faculty_login",async (req,res) => {
         res.status(500).send(error);
       }
 });
-
 //call through /api/User/Faculty_data
 
 router.post('/Faculty_data', async (req, res) => {
@@ -808,6 +807,30 @@ router.post('/Faculty_data', async (req, res) => {
       const result = await FacultyModel.findOne({ email: yourEmail }).exec();
       if (result !== null) {
         res.send(result);
+      }else{
+        res.json([{
+          id: 0,
+          text: "No data Found",
+        }]);
+      }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
+router.post('/Faculty_data_by_institute_id', async (req, res) => {
+  try {
+    console.log(req.body);
+      const yourInstituteID = req.body.instituteID;
+      // const yourPhone = req.body.Phone;
+  
+      const result = await FacultyModel.find({ institute_id: yourInstituteID }).exec();
+      if (result !== null) {
+        res.json([{
+          id: 1,
+          data: result,
+        }]);
       }else{
         res.json([{
           id: 0,
@@ -845,6 +868,7 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
     res.status(500).send('Internal server error');
   }
 });
+
 
 
 module.exports = router;
