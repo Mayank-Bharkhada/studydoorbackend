@@ -15,6 +15,10 @@ const enrollmentSchema = new Schema({
     unique: false, 
     required: true
   },
+  number: {
+    type: Number,
+    required: true,
+  },
   studentProfilePic: {
     type: String,
     unique: false, 
