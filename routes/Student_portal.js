@@ -672,7 +672,7 @@ router.post('/submit_exam', async (req, res) => {
     const Enrollment = await EnrollmentModel.findOne({ student_id: student_id, confirm: "1" }).exec();
     if (Enrollment !== null) {
 
-      const givenExams = Enrollment.givenExam;
+      let givenExams = Enrollment.givenExam;
 
       // Check if the givenExam array already contains an object with the specified exam ID
       const index = givenExams.findIndex((exam) => exam.exam_id.toString() === exam_id.toString());
