@@ -14,8 +14,7 @@ const QuestionSchema = new mongoose.Schema({
     },
     department: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     semester: {
       type: Number,
