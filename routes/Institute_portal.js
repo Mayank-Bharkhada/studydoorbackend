@@ -731,8 +731,8 @@ router.post('/creaate_faculty_account', async (req, res) => {
       number,
       course,
       department,
-      userName,
-      userUuid,
+      UserName : userName,
+      UserUuid : userUuid,
       email,
       password: hashedPassword
     });
