@@ -71,7 +71,21 @@ const enrollmentSchema = new Schema({
     type: [String],
     default: [],
     required: false
-  }
+  },
+  givenExam:[
+    {
+      exam_id: {
+        type: Schema.Types.ObjectId,
+        default: "",
+        required:false
+      },
+      marks: {
+        type: Number,
+        default: 100,
+        required:false
+      },
+    }
+  ]
 });
 
 // Create a new model based on the enrollment schema and export it
