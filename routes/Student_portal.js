@@ -578,7 +578,7 @@ router.post('/Course_Enrollment', async (req, res) => {
           course_id: yourCourse_id,
           courseName: yourCourseName,
           courseDepartment: yourCourseDepartment,
-          number: student.number,
+          number: student.phone,
           UserName: yourUserName,
           UserUuid: yourUserUuid
         });
