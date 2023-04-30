@@ -639,7 +639,6 @@ router.post('/enroll_Confirm', async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 router.post('/Generate_lacture', async (req, res) => {
   try {
     const {
@@ -651,9 +650,13 @@ router.post('/Generate_lacture', async (req, res) => {
       instituteId,
       startTime,
       endTime,
-      examDate
+      examDate,
+      channelName,
+      token
     } = req.body;
 
+    
+    
     // Create a new lecture object using the data from the request body
     const newLecture = new LectureModel({
       title,
@@ -665,8 +668,8 @@ router.post('/Generate_lacture', async (req, res) => {
       startTime,
       endTime,
       examDate,
-      ChannalName: "test",
-      ChannalToken:"007eJxTYLBmMbf7q3XqXvHV5uszDcz2PIia1NkhvMWk2iL23zOpXXkKDMZJBknGFgYWBqlpKSZmiUYWyRZJ5qbGFubJZmapFmlpW8I9UxoCGRlWCu5lZmSAQBCfhaEktbiEgQEAVuUfng==",
+      ChannalName: channelName,
+      ChannalToken: token,
     });
 
 
@@ -679,6 +682,7 @@ router.post('/Generate_lacture', async (req, res) => {
     res.status(500).json([{ id: 0, text: 'Error adding lecture to server.' }]);
   }
 });
+
 
 //call through /api/User/lactures_data_by_institute_id_for_institute
 
