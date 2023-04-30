@@ -564,6 +564,8 @@ router.post('/Course_Enrollment', async (req, res) => {
       const yourCourse_id = req.body.Course_id;
       const yourCourseName= req.body.CourseName;
       const yourCourseDepartment = req.body.CourseDepartment;
+      const yourUserName = req.body.UserName;
+      const yourUserUuid= req.body.UserUuid;
 
       const student = await StudentModel.findOne({ email: yourEmail }).exec();
       console.log(student._id)
@@ -575,7 +577,10 @@ router.post('/Course_Enrollment', async (req, res) => {
           institute_id: yourInstitute_id,
           course_id: yourCourse_id,
           courseName: yourCourseName,
-          courseDepartment: yourCourseDepartment
+          courseDepartment: yourCourseDepartment,
+          number: student.number,
+          UserName: yourUserName,
+          UserUuid: yourUserUuid
         });
          const result =  await Enrollment.save();
           console.log(result);
