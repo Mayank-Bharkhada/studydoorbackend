@@ -26,7 +26,7 @@ const FacultySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  userName: {
+  UserName: {
     type: String,
     required: true,
     unique: true
@@ -40,7 +40,7 @@ const FacultySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userUuid: {
+  UserUuid: {
     type: String,
     required: true,
     unique: true
