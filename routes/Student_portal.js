@@ -613,5 +613,55 @@ router.post('/Course_Enrollment', async (req, res) => {
 });
 
 
+//call through /api/User/video_seen
+
+router.post('/video_seen', async (req, res) => {
+  try {
+    console.log(req.body);
+    const student_id = req.body.student_id;
+    const video_id = req.body.video_id;
+
+
+    const Enrollment = await EnrollmentModel.findOne({ student_id: student_id, confirm: "1" }).exec();
+    if (Enrollment !== null) {
+      let watchedVideos = Enrollment.watchedVideos;
+      if (!watchedVideos.includes(video_id)) {
+        myArray.push(video_id);
+        const result = await EnrollmentModel.updateOne({ _id: Enrollment._id, confirm: "1" }, { $set: { watchedVideos: watchedVideos } }, { upsert: false });
+        if (result.nModified > 0) {
+          res.status(200).json({
+            id: 1,
+            text: "successfully upload"
+          })
+        } else {
+          res.status(201).json({
+            id: 0,
+            text: "There are some error"
+          })
+        }
+      }else{
+        res.status(201).json({
+          id: 0,
+          text: "There are some error"
+        })
+      }
+
+    }else{
+      res.status(201).json({
+        id: 0,
+        text: "There are some error"
+      })
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json([{
+      id: 0,
+      text: "server Error"
+    }]);
+  }
+});
+
+
   
 module.exports = router;
