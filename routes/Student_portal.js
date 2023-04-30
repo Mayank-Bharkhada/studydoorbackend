@@ -671,14 +671,21 @@ router.post('/submit_exam', async (req, res) => {
 
     const Enrollment = await EnrollmentModel.findOne({ student_id: student_id, confirm: "1" }).exec();
     if (Enrollment !== null) {
-      const newExam = {
-        exam_id: exam_id,
-        marks: marks
-      };
-      const result = await EnrollmentModel.updateOne(
-        { _id: Enrollment._id, "givenExam.exam_id": { $ne: newExam.exam_id } },
-        { $push: { givenExam: newExam } }
-      );
+
+      const givenExams = Enrollment.givenExam;
+
+      // Check if the givenExam array already contains an object with the specified exam ID
+      const index = givenExams.findIndex((exam) => exam.exam_id.toString() === exam_id.toString());
+
+      if (index === -1) {
+        // Exam ID doesn't exist in the array, append a new object
+        givenExams.push({
+          exam_id: exam_id,
+          marks: marks
+        });
+      }   
+        const result = await EnrollmentModel.updateOne({ _id: Enrollment._id }, { $set: { givenExam: givenExams } }, { upsert: false });
+
       if (result.modifiedCount > 0) {
         res.status(200).json({
           id: 1,
@@ -705,7 +712,6 @@ router.post('/submit_exam', async (req, res) => {
     }]);
   }
 });
-
 
   
 module.exports = router;
