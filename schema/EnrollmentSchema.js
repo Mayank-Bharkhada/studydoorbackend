@@ -3,6 +3,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Define the enrollment schema
+const examSchema = new mongoose.Schema({
+  exam_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Exam',
+    required: true
+  },
+  marks: {
+    type: Number,
+    default: 100
+  }
+});
+
+
 const enrollmentSchema = new Schema({
   student_id: {
     type: Schema.Types.ObjectId,
@@ -62,7 +75,7 @@ const enrollmentSchema = new Schema({
     default: null,
     required:true
   },
-    semester: {
+  semester: {
     type: Number,
     default: 1,
     required:false
@@ -72,20 +85,7 @@ const enrollmentSchema = new Schema({
     default: [],
     required: false
   },
-  givenExam:[
-    {
-      exam_id: {
-        type: Schema.Types.ObjectId,
-        default: "",
-        required:false
-      },
-      marks: {
-        type: Number,
-        default: 100,
-        required:false
-      },
-    }
-  ]
+  givenExam: [examSchema]
 });
 
 // Create a new model based on the enrollment schema and export it
