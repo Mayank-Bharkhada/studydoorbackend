@@ -629,7 +629,7 @@ router.post('/video_seen', async (req, res) => {
         watchedVideos.push(video_id);
         const result = await EnrollmentModel.updateOne({ _id: Enrollment._id, confirm: "1" }, { $set: { watchedVideos: watchedVideos } }, { upsert: false });
       console.log(result);
-        if (result.nModified > 0) {
+        if (result.modifiedCount > 0) {
           res.status(200).json({
             id: 1,
             text: "successfully upload"
