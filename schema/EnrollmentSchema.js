@@ -61,6 +61,16 @@ const enrollmentSchema = new Schema({
     type: Number,
     default: null,
     required:true
+  },
+    semester: {
+    type: Number,
+    default: 1,
+    required:false
+  },
+  watchedVideos: {
+    type: [String],
+    default: [],
+    required: false
   }
 });
 
