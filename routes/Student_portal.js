@@ -400,11 +400,11 @@ router.post('/fetch_all_videos_by_users_id', async (req, res) => {
       console.log(Enrollment.institute_id);
       console.log(Enrollment.courseDepartment);
       console.log(Enrollment.courseName);
-      const Lecture = await VideoModel.find({instituteId: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
+      const Videos = await VideoModel.find({instituteId: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
       console.log(Videos);
        res.json([{
           id: 1,
-          data: Lecture,
+          data: Videos,
         }]);
     }else{
       res.json([{
