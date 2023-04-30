@@ -459,7 +459,7 @@ router.post('/Generate_quiz', async (req, res) => {
     const { department, course, semester, title,description , InstituteId} = req.body;
    
     const Video = req.files.Video;
-    const Thumbnail = req.files.Video;
+    const Thumbnail = req.files.Thumbnail;
   
     try {
       // Upload file to S3
