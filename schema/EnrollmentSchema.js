@@ -72,8 +72,8 @@ const enrollmentSchema = new Schema({
   },
   confirm: {
     type: Number,
-    default: null,
-    required:true
+    default: 0,
+    required:false
   },
   semester: {
     type: Number,
