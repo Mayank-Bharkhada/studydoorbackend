@@ -628,6 +628,7 @@ router.post('/video_seen', async (req, res) => {
       if (!watchedVideos.includes(video_id)) {
         watchedVideos.push(video_id);
         const result = await EnrollmentModel.updateOne({ _id: Enrollment._id, confirm: "1" }, { $set: { watchedVideos: watchedVideos } }, { upsert: false });
+      console.log(result);
         if (result.nModified > 0) {
           res.status(200).json({
             id: 1,
