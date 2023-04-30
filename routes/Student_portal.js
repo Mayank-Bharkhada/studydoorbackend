@@ -663,6 +663,49 @@ router.post('/video_seen', async (req, res) => {
   }
 });
 
+router.post('/submit_exam', async (req, res) => {
+  try {
+    const student_id = req.body.student_id;
+    const exam_id = req.body.exam_id;
+    const marks = req.body.marks;
+
+    const Enrollment = await EnrollmentModel.findOne({ student_id: student_id, confirm: "1" }).exec();
+    if (Enrollment !== null) {
+      const newExam = {
+        exam_id: exam_id,
+        marks: marks
+      };
+      const result = await EnrollmentModel.updateOne(
+        { _id: Enrollment._id, "givenExam.exam_id": { $ne: newExam.exam_id } },
+        { $push: { givenExam: newExam } }
+      );
+      if (result.modifiedCount > 0) {
+        res.status(200).json({
+          id: 1,
+          text: "successfully submitted"
+        })
+      } else {
+        res.status(201).json({
+          id: 0,
+          text: "There are some error"
+        })
+      }
+    } else {
+      res.status(201).json({
+        id: 0,
+        text: "There are some error"
+      })
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json([{
+      id: 0,
+      text: "server Error"
+    }]);
+  }
+});
+
 
   
 module.exports = router;
