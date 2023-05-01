@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
+
+const InstituteModel = require('../schema/InstituteSchema');
 //call through /api/User/Admin_login
 
 router.post("/Admin_login",async (req,res) => {
