@@ -279,7 +279,7 @@ router.post('/Generate_course', async (req, res) => {
     }]);
   }
 });
-   //call through /api/User/institute/Varification_request
+ //call through /api/User/institute/Varification_request
 
 
 const upload = multer({
@@ -333,7 +333,7 @@ const upload = multer({
    
 
     const filter = { email: yourEmail };
-    const update = { $set: { varificationRequest: 1 } };
+    const update = { $set: { varificationRequest: 1,accreditationCertificateUrl:accreditationCertificateUrl,businessRegistrationCertificateUrl:businessRegistrationCertificateUrl} };
     const options = { upsert: false };
 
     const result = await InstituteModel.updateOne(filter, update, options);
@@ -365,7 +365,6 @@ const upload = multer({
     
   
   });
-
 
  
   //call through /api/User/Upload_books
