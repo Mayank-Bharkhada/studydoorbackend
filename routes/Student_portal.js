@@ -716,7 +716,8 @@ router.post('/submit_exam', async (req, res) => {
 
 router.post('/request_for_certificate', async (req, res) => {
   const {   enrollmentData } = req.body;
-console.log(enrollmentData);
+
+  console.log(enrollmentData.student_id);
   try {
     const certificate = await CertificateModel.create({
       studentId : enrollmentData.student_id,
@@ -730,11 +731,12 @@ console.log(enrollmentData);
       semester : enrollmentData.semester,
     });
 
-    res.status(200).json({id:1, data: certificate });
+    res.status(201).json({id:1, data: "certificate" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error creating certificate' });
   }
 });
+
   
 module.exports = router;
