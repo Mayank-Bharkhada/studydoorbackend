@@ -1,8 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const router = express.Router();
-
+const StudentModel = require('../schema/StudetSchema');
 const InstituteModel = require('../schema/InstituteSchema');
+
 //call through /api/User/Admin_login
 
 router.post("/Admin_login",async (req,res) => {
@@ -48,6 +49,27 @@ router.post("/Admin_login",async (req,res) => {
   router.post('/requested_institute_data', async (req, res) => {
     try {   
         const result = await InstituteModel.find({verificationRequest: 1 }).exec();
+        if (result !== null) {
+          res.send({
+            id: 1,
+            data: result,
+          });
+        }else{
+          res.json([{
+            id: 0,
+            text: "No data Found",
+          }]);
+        }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  });
+
+  router.post('/requested_student_data', async (req, res) => {
+    try {
+    
+        const result = await StudentModel.find({verificationRequest: 1 }).exec();
         if (result !== null) {
           res.send({
             id: 1,
