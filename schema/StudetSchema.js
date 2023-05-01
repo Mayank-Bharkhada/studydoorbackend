@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const StudentSchema = new mongoose.Schema({
-  name: {
+ name: {
     type: String,
     required: true,
   },
@@ -41,32 +41,7 @@ const StudentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  adharNumber: {
-    type: Number,
-    required: false,
-    default: null,
-  },
-  leavingCertificate: {
-    type: String,
-    required: false,
-    default: null,
-  },
-  lastResult: {
-    type: String,
-    required: false,
-    default: null,
-  },
-  lastResultPersentage: {
-    type: String,
-    required: false,
-    default: null,
-  },
   profilePhoto: {
-    type: String,
-    required: false,
-    default: null,
-  },
-  varificationPhoto: {
     type: String,
     required: false,
     default: null,
@@ -94,6 +69,21 @@ const StudentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  officialTranscriptUrl: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  leavigCertificateUrl: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  governmentIssuedIdentificationUrl: {
+    type: String,
+    required: false,
+    default: null,
+  }
 });
 
 const StudentModel = mongoose.model("Student", StudentSchema);
