@@ -976,5 +976,27 @@ router.post('/enrollment_data_by_certificate_id', async (req, res) => {
     }
   });
 
+router.post('/total_videos_by_institute_id_and_student_semester', async (req, res) => {
+    const { instituteId, semester } = req.body;
+  
+    try {
+      const totalVideos = await VideoModel.countDocuments({
+        institute_id: instituteId,
+        semester: semester
+      });
+  
+      res.json({
+        id: 1,
+        totalVideos: totalVideos
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        id: 0,
+        message: 'Failed to retrieve total videos'
+      });
+    }
+  });
+
 
 module.exports = router;
