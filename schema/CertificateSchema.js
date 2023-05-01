@@ -15,6 +15,22 @@ const CertificateSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true
   },
+  studentName:{
+    type: String,
+    required: true
+  },
+  course:{
+    type: String,
+    required: true
+  },
+  department:{    
+    type: String,
+    required: true
+  },
+  number:{
+    type: Number,
+    required: true
+  },
   confirm: {
     type: Boolean,
     required: true
