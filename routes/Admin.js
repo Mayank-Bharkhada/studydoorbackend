@@ -100,7 +100,7 @@ router.post('/Student_data_by_id', async (req, res) => {
     if (result !== null) {
       res.send({
         id: 1,
-        text: result,
+        data: result,
       });
     } else {
       res.json([{
