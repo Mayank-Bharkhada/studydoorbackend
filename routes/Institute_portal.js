@@ -948,5 +948,33 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
     }
   });
 
+r.post('/enrollment_data_by_certificate_id', async (req, res) => {
+    const { certificateId } = req.body;
+  
+    try {
+      const certificate = await CertificateModel.findOne({ _id: certificateId });
+  
+      if (!certificate) {
+        return res.status(404).json({ message: 'Certificate not found' });
+      }
+  
+      const enrollment = await EnrollmentModel.findOne({ _id: certificate.enrollmentId });
+  
+      if (!enrollment) {
+        return res.status(404).json({ message: 'Enrollment not found' });
+      }
+  
+      res.status(200).json({
+        id: 1,
+        data: {
+          enrollment
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error getting enrollment data' });
+    }
+  });
+
 
 module.exports = router;
