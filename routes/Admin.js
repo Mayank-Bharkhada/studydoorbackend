@@ -19,7 +19,7 @@ router.post("/Admin_login",async (req,res) => {
             console.log(result);
             res.json([{
               id : 1,
-              text : "Yours welcome Admin."
+              data : "Yours welcome Admin."
             }]);
           } else if (err) {
             console.log(err);
