@@ -932,7 +932,7 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
     const { InstituteId } = req.body;
   
     try {
-      const certificates = await CertificateModel.find({ instituteId: InstituteId });
+      const certificates = await CertificateModel.find({ instituteId: InstituteId , confirm : false});
       if(certificates){
         res.status(200).json({
           id:1,
