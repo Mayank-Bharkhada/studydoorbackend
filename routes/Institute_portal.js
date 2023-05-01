@@ -13,6 +13,7 @@ const VideoModel = require('../schema/VideoSchema');
 const QuestionModel = require('../schema/QuestionSchema');
 const LectureModel = require('../schema/LectureSchema');
 const FacultyModel = require('../schema/FacultySchema');
+const CertificateModel = require('../schema/CertificateSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -926,5 +927,26 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
     }
   });
   
+  router.post('/certificate_data_by_institute_id', async (req, res) => {
+    const { InstituteId } = req.body;
+  
+    try {
+      const certificates = await CertificateModel.find({ instituteId: InstituteId });
+      if(certificates){
+        res.status(200).json({
+          id:1,
+          data: certificates});
+      }else{
+        res.status(200).json({
+          id:0,
+          data: "no data"});
+      }
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error getting certificates' });
+    }
+  });
+
 
 module.exports = router;
