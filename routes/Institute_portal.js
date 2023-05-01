@@ -999,7 +999,7 @@ router.post('/total_videos_by_institute_id_and_student_semester', async (req, re
   });
 
 
-router.delete('/delete_certificate_by_id', async (req, res) => {
+router.post('/delete_certificate_by_id', async (req, res) => {
   const {certificateId }= req.body;
   
   try {
