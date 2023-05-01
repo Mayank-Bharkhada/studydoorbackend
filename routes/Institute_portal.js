@@ -948,7 +948,7 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
     }
   });
 
-r.post('/enrollment_data_by_certificate_id', async (req, res) => {
+router.post('/enrollment_data_by_certificate_id', async (req, res) => {
     const { certificateId } = req.body;
   
     try {
