@@ -745,6 +745,25 @@ router.post('/request_for_certificate', async (req, res) => {
   }
 });
 
+router.post('/certificate_data_by_student_id', async (req, res) => {
+  const { studentId } = req.body;
 
+  try {
+    const certificates = await CertificateModel.find({ studentId: studentId , confirm : true});
+    if(certificates){
+      res.status(200).json({
+        id:1,
+        data: certificates});
+    }else{
+      res.status(200).json({
+        id:0,
+        data: "no data"});
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error getting certificates' });
+  }
+});
   
 module.exports = router;
