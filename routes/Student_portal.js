@@ -722,7 +722,7 @@ console.log(enrollmentData);
       studentId : enrollmentData.student_id,
       instituteId : enrollmentData.institute_id,
       enrollmentId :enrollmentData._id,
-      StudentName: enrollmentData.studentName,
+      studentName: enrollmentData.studentName,
       course: enrollmentData.courseName,
       department: enrollmentData.courseDepartment,
       number: enrollmentData.number,
