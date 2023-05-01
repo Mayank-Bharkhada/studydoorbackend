@@ -14,6 +14,7 @@ const QuestionModel = require('../schema/QuestionSchema');
 const LectureModel = require('../schema/LectureSchema');
 const FacultyModel = require('../schema/FacultySchema');
 const CertificateModel = require('../schema/CertificateSchema');
+const StudentModel = require('../schema/StudetSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -1014,6 +1015,23 @@ router.post('/delete_certificate_by_id', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({message: 'Internal server error.'});
+  }
+});
+
+router.post('/approve_certificate_by_id', async (req, res) => {
+  try {
+      const certificateId = req.body.certificateId;
+
+      // Update the certificate document to confirm true
+      const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
+
+      // Update the student document to set watch video and given quiz to null
+      const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watch_video: null, given_quiz: null } });
+
+      res.json({ success: true, message: "Certificate approved successfully." });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Unable to approve certificate." });
   }
 });
 
