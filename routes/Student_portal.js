@@ -714,21 +714,28 @@ router.post('/submit_exam', async (req, res) => {
   }
 });
 
-router.post('/request_for_certificate', async (req, res) => {
-  const {   enrollmentData } = req.body;
 
-  console.log(enrollmentData.student_id);
+router.post('/request_for_certificate', async (req, res) => {
+  const {  studentId,
+    instituteId,
+    enrollmentId,
+    studentName,
+    course,
+    department,
+    number,
+    semester   } = req.body;
+
   try {
     const certificate = await CertificateModel.create({
-      studentId : enrollmentData.student_id,
-      instituteId : enrollmentData.institute_id,
-      enrollmentId :enrollmentData._id,
-      studentName: enrollmentData.studentName,
-      course: enrollmentData.courseName,
-      department: enrollmentData.courseDepartment,
-      number: enrollmentData.number,
+      studentId,
+      instituteId,
+      enrollmentId,
+      studentName,
+      course,
+      department,
+      number,
       confirm: false,
-      semester : enrollmentData.semester,
+      semester 
     });
 
     res.status(201).json({id:1, data: "certificate" });
@@ -737,6 +744,7 @@ router.post('/request_for_certificate', async (req, res) => {
     res.status(500).json({ message: 'Error creating certificate' });
   }
 });
+
 
   
 module.exports = router;
