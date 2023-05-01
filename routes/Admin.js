@@ -114,4 +114,90 @@ router.post('/Student_data_by_id', async (req, res) => {
   }
 });
 
+
+router.post('/varify_institute_by_id', async (req, res) => {
+  try {
+      const instituteId = req.body.instituteId;
+
+      // Update the certificate document to confirm true
+      // const updatedInstitute = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
+
+      // Update the student document to set watch video and given quiz to null
+      const updatedInstitute = await InstituteModel.updateOne({ _id:instituteId }, { $set: { verified : 1, verificationRequest : 0} });
+
+      if (updatedInstitute.modifiedCount === 1) {
+      res.status(200).json({ success: true, message: "Institute varified successfully." });
+      }else{
+        res.status(201).json({ success: false, message: "Error no data" });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Unable to approve certificate." });
+  }
+});
+
+router.post('/unvarify_institute_by_id', async (req, res) => {
+  try {
+      const instituteId = req.body.instituteId;
+
+      // Update the certificate document to confirm true
+      // const updatedInstitute = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
+
+      // Update the student document to set watch video and given quiz to null
+      const updatedInstitute = await InstituteModel.updateOne({ _id: instituteId }, { $set: {verificationRequest : 0} });
+
+      if (updatedInstitute.modifiedCount === 1) {
+      res.status(200).json({ success: true, message: "Institute varified successfully." });
+      }else{
+        res.status(201).json({ success: false, message: "Error no data" });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Unable to approve certificate." });
+  }
+});
+
+router.post('/varify_student_by_id', async (req, res) => {
+  try {
+      const instituteId = req.body.studentId;
+
+      // Update the certificate document to confirm true
+      // const updatedInstitute = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
+
+      // Update the student document to set watch video and given quiz to null
+      const updatedInstitute = await StudentModel.updateOne({ _id: studentId }, { $set: { verified : 1, verificationRequest : 0} });
+
+      if (updatedInstitute.modifiedCount === 1) {
+      res.status(200).json({ success: true, message: "Institute varified successfully." });
+      }else{
+        res.status(201).json({ success: false, message: "Error no data" });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Unable to approve certificate." });
+  }
+});
+
+router.post('/unvarify_student_by_id', async (req, res) => {
+  try {
+      const studentId = req.body.studentId;
+
+      // Update the certificate document to confirm true
+      // const updatedInstitute = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
+
+      // Update the student document to set watch video and given quiz to null
+      const updatedInstitute = await StudentModel.updateOne({ _id: studentId }, { $set: {verificationRequest : 0} });
+
+      if (updatedInstitute.modifiedCount === 1) {
+      res.status(200).json({ success: true, message: "Institute varified successfully." });
+      }else{
+        res.status(201).json({ success: false, message: "Error no data" });
+      }
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Unable to approve certificate." });
+  }
+});
+
+
 module.exports = router;
