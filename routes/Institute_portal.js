@@ -999,4 +999,22 @@ router.post('/total_videos_by_institute_id_and_student_semester', async (req, re
   });
 
 
+router.delete('/delete_certificate_by_id', async (req, res) => {
+  const {certificateId }= req.body;
+  
+  try {
+    const result = await CertificateModel.deleteOne({_id: certificateId});
+    if (result.deletedCount === 1) {
+      res.status(200).json({
+        id: 1,
+        message: 'Certificate deleted successfully.'});
+    } else {
+      res.status(404).json({message: 'Certificate not found.'});
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({message: 'Internal server error.'});
+  }
+});
+
 module.exports = router;
