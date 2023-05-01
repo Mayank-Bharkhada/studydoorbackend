@@ -15,6 +15,7 @@ const BookModel = require('../schema/BookSchema');
 const VideoModel = require('../schema/VideoSchema');
 const QuestionModel = require('../schema/QuestionSchema');
 const LectureModel = require('../schema/LectureSchema');
+const CertificateModel = require('../schema/CertificateSchema');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
@@ -713,5 +714,27 @@ router.post('/submit_exam', async (req, res) => {
   }
 });
 
+router.post('/request_for_certificate', async (req, res) => {
+  const {   enrollmentData } = req.body;
+
+  try {
+    const certificate = await CertificateModel.create({
+      studentId : enrollmentData.student_id,
+      instituteId : enrollmentData.institute_id,
+      enrollmentId :enrollmentData._id,
+      StudentName: enrollmentData.studentName,
+      course: enrollmentData.courseName,
+      department: enrollmentData.courseDepartment,
+      number: enrollmentData.number,
+      confirm: false,
+      semester : enrollmentData.semester,
+    });
+
+    res.status(200).json({id:1, data: certificate });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error creating certificate' });
+  }
+});
   
 module.exports = router;
