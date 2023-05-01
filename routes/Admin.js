@@ -87,4 +87,30 @@ router.post("/Admin_login",async (req,res) => {
     }
   });
 
+ //call through /api/User/Student_data
+
+router.post('/Student_data_by_id', async (req, res) => {
+  try {
+    console.log(req.body);
+    const student_id = req.body.student_id;
+    // const yourPhone = req.body.Phone;
+
+    const result = await StudentModel.findOne({ _id: student_id }).exec();
+    if (result !== null) {
+      res.send({
+        id: 1,
+        text: result,
+      });
+    } else {
+      res.json([{
+        id: 0,
+        text: "No data Found",
+      }]);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;
