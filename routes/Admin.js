@@ -43,5 +43,24 @@ router.post("/Admin_login",async (req,res) => {
         }
   });
   
+  router.post('/requested_institute_data', async (req, res) => {
+    try {   
+        const result = await InstituteModel.findOne({verificationRequest: 1 }).exec();
+        if (result !== null) {
+          res.send({
+            id: 1,
+            data: result,
+          });
+        }else{
+          res.json([{
+            id: 0,
+            text: "No data Found",
+          }]);
+        }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error);
+    }
+  });
 
 module.exports = router;
