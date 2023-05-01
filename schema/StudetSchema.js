@@ -51,12 +51,12 @@ const StudentSchema = new mongoose.Schema({
     required: false,
     default: 0,
   },
-  varified: {
+  verified: {
     type: Number,
     required: false,
     default: 0,
   },
-  varificationRequest: {
+  verificationRequest: {
     type: Number,
     required: false,
     default: 0,
