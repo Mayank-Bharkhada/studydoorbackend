@@ -45,7 +45,7 @@ router.post("/Admin_login",async (req,res) => {
   
   router.post('/requested_institute_data', async (req, res) => {
     try {   
-        const result = await InstituteModel.findOne({verificationRequest: 1 }).exec();
+        const result = await InstituteModel.find({verificationRequest: 1 }).exec();
         if (result !== null) {
           res.send({
             id: 1,
