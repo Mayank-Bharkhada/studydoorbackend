@@ -716,7 +716,7 @@ router.post('/submit_exam', async (req, res) => {
 
 router.post('/request_for_certificate', async (req, res) => {
   const {   enrollmentData } = req.body;
-
+console.log(enrollmentData);
   try {
     const certificate = await CertificateModel.create({
       studentId : enrollmentData.student_id,
