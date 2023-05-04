@@ -6,23 +6,22 @@ const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000);
 };
 
-
 // Send OTP to email
 const sendOTPToEmail = async (email, otp) => {
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp.ethereal.email',
-  port: 587,
-  auth: {
-      user: 'jermaine.hackett24@ethereal.email',
-      pass: 'mWeYRbEVNCeERUxDmJ'
-  }
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'abbigail.feil5@ethereal.email',
+        pass: 'eETdu9tBdnqv3sny4R'
+    }
 });
 
   const mailOptions = {
-    from: 'jermaine.hackett24@ethereal.email', // Your email address
+    from: '"Studydoor : " <abbigail.feil5@ethereal.email>', // Your email address
     to: email,
-    subject: 'One-Time Password (OTP)',
+    subject: 'One-Time Password (OTP For Studydoor)',
     text: `Your OTP is ${otp}`,
   };
 
@@ -42,7 +41,7 @@ const transporter = nodemailer.createTransport({
   if(result.accepted[0] != null ){
     return true;
   }else{
-    return true;
+    return false;
   }
 
 };
