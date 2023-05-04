@@ -766,4 +766,27 @@ router.post('/certificate_data_by_student_id', async (req, res) => {
   }
 });
   
+//call through /api/User/Student_data_by_id
+
+router.post('/Student_data_by_id', async (req, res) => {
+  try {
+    console.log(req.body);
+    const yourStudentId = req.body.StudentId;
+    // const yourPhone = req.body.Phone;
+
+    const result = await StudentModel.findOne({ _id: yourStudentId }).exec();
+    if (result !== null) {
+      res.send(result);
+    } else {
+      res.json([{
+        id: 0,
+        text: "No data Found",
+      }]);
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
+
 module.exports = router;
