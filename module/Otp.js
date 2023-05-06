@@ -8,41 +8,38 @@ const generateOTP = () => {
 
 // Send OTP to email
 const sendOTPToEmail = async (email, otp) => {
+try {
+    var transporter = nodemailer.createTransport({
+      host: "sandbox.smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+        user: "c8b2ca8f9daa0c",
+        pass: "73062e1fce4e5a"
+      }
+    });
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    auth: {
-        user: 'abbigail.feil5@ethereal.email',
-        pass: 'eETdu9tBdnqv3sny4R'
-    }
-});
 
-  const mailOptions = {
-    from: '"Studydoor : " <abbigail.feil5@ethereal.email>', // Your email address
-    to: email,
-    subject: 'One-Time Password (OTP For Studydoor)',
-    text: `Your OTP is ${otp}`,
-  };
 
-  const result = await new Promise((resolve, reject) => {
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve(info);
-    }
-  });
-});
+var mailOptions = {
+  from: "'no reply : '<mayankbharkhada14101@gmail.com>",
+  to: `${email}`,
+  subject: 'Your OTP :',
+  text: `Your OTP for studydoor is ${otp}`
+};
 
-  console.log("result");  
-  console.log(result.accepted[0]  );  
-  console.log("result");  
-  if(result.accepted[0] != null ){
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+//     console.log(error);
     return true;
-  }else{
-    return true;
+  } else {
+    console.log('Email sent: ' + info.response);
+    return false;
   }
+});
+} catch (error) {
+    return false;
+  console.log(error);
+}
 
 };
 
@@ -54,9 +51,9 @@ const sendOTPToPhoneNumber =  async(phoneNumber, otp) => {
 
   const result = await client.messages
     .create({
-      body: `Your OTP is ${otp}`,
+      body: `Your OTP for studydoor is ${otp}`,
       from: '+12262413079', // Your Twilio phone number
-      to: `+917043374230`,
+      to: `+91${phoneNumber}`,
     })
     .then((message) => {
       console.log(message.sid);
