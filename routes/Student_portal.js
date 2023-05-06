@@ -522,7 +522,7 @@ router.post('/fetch_all_lectures_by_users_id', async (req, res) => {
   
 
         const filter = { email: yourEmail };
-        const update = { $set: { varificationRequest: 1, officialTranscriptUrl : officialTranscriptUrl ,leavigCertificateUrl:leavigCertificateUrl, governmentIssuedIdentificationUrl: governmentIssuedIdentificationUrl } };
+        const update = { $set: { verificationRequest: 1, officialTranscriptUrl : officialTranscriptUrl ,leavigCertificateUrl:leavigCertificateUrl, governmentIssuedIdentificationUrl: governmentIssuedIdentificationUrl } };
         const options = { upsert: false };
     
         const result = await StudentModel.updateOne(filter, update, options);
