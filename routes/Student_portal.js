@@ -92,8 +92,10 @@ router.post("/Student_registration",async (req,res) => {
       const yourState = req.body.State; 
       const yourCountry = req.body.Country; 
       const yourPincode = req.body.Pincode;
-      const YourUserName = req.body.UserName; 
-      const YourUserUuid = req.body.UserUuid; 
+      const YourUserName = req.body.userName; 
+      const YourUserUuid = req.body.userUuid; 
+      
+      
       
       
       const salt = await bcrypt.genSalt(saltRounds);
