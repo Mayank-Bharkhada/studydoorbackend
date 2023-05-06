@@ -8,8 +8,8 @@ const generateOTP = () => {
 
 // Send OTP to email
 const sendOTPToEmail = async (email, otp) => {
-try {
-    var transporter = nodemailer.createTransport({
+  try {
+    const transporter = nodemailer.createTransport({
       host: "sandbox.smtp.mailtrap.io",
       port: 2525,
       auth: {
@@ -18,29 +18,20 @@ try {
       }
     });
 
+    const mailOptions = {
+      from: "'no reply : '<mayankbharkhada14101@gmail.com>",
+      to: email,
+      subject: 'Your OTP :',
+      text: `Your OTP for studydoor is ${otp}`
+    };
 
-
-var mailOptions = {
-  from: "'no reply : '<mayankbharkhada14101@gmail.com>",
-  to: `${email}`,
-  subject: 'Your OTP :',
-  text: `Your OTP for studydoor is ${otp}`
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-//     console.log(error);
-    return true;
-  } else {
+    const info = await transporter.sendMail(mailOptions);
     console.log('Email sent: ' + info.response);
     return true;
+  } catch (error) {
+    console.log(error);
+    return false;
   }
-});
-} catch (error) {
-    return true;
-  console.log(error);
-}
-
 };
 
 // Send OTP to phone number
@@ -74,7 +65,7 @@ const Email = await sendOTPToEmail(email, otp);
   const phone = await sendOTPToPhoneNumber(phoneNumber, otp);
 
   
-  if ( Email || phone ){
+  if ( Email && phone ){
     return [true, otp];
   }else{
     return false;
