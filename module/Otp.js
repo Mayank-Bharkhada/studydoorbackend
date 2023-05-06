@@ -33,11 +33,11 @@ transporter.sendMail(mailOptions, function(error, info){
     return true;
   } else {
     console.log('Email sent: ' + info.response);
-    return false;
+    return true;
   }
 });
 } catch (error) {
-    return false;
+    return true;
   console.log(error);
 }
 
