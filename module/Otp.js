@@ -74,7 +74,7 @@ const Email = await sendOTPToEmail(email, otp);
   const phone = await sendOTPToPhoneNumber(phoneNumber, otp);
 
   
-  if ( Email && phone ){
+  if ( Email || phone ){
     return [true, otp];
   }else{
     return false;
