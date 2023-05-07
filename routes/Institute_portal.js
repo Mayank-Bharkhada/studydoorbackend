@@ -153,7 +153,7 @@ router.post("/Institute_registration",async (req,res) => {
         const Institute = new InstituteModel ({
           name: yourName,
           email: yourEmail,
-          phone: yourPhone,
+          number: yourPhone,
           dateOfEstablishment: yourDateOfEstablishment,
           password: Password ,
           address: yourAddress,
