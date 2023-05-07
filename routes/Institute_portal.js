@@ -334,7 +334,7 @@ const upload = multer({
    
 
     const filter = { email: yourEmail };
-    const update = { $set: { varificationRequest: 1,accreditationCertificateUrl:accreditationCertificateUrl,businessRegistrationCertificateUrl:businessRegistrationCertificateUrl} };
+    const update = { $set: { verificationRequest: 1,accreditationCertificateUrl:accreditationCertificateUrl,businessRegistrationCertificateUrl:businessRegistrationCertificateUrl} };
     const options = { upsert: false };
 
     const result = await InstituteModel.updateOne(filter, update, options);
