@@ -319,10 +319,17 @@ router.post('/fetch_all_books_by_users_id', async (req, res) => {
       console.log(Enrollment.courseName);
       const Books = await BookModel.find({institute_id: Enrollment.institute_id,courseName:Enrollment.courseName,department:Enrollment.courseDepartment});
       console.log(Books);
-       res.json([{
+     if(Books){
+        res.json([{
           id: 1,
           data: Books,
         }]);
+      }else{
+        res.json([{
+          id: 0,
+          data: 'No data',
+        }]);
+      }
     }else{
       res.json([{
           id: 0,
