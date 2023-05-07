@@ -382,10 +382,17 @@ router.post('/fetch_all_quiz_by_users_id', async (req, res) => {
       console.log(Enrollment.courseName);
       const question = await QuestionModel.find({institute_id: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
       console.log(question);
-       res.json([{
+         if (question) {
+        res.json([{
           id: 1,
           data: question,
         }]);
+      } else {
+        res.json([{
+          id: 0,
+          data: 'No data',
+        }]);
+      }    
     }else{
       res.json([{
           id: 0,
