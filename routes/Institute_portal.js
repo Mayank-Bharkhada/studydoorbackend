@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const mongoose = require('mongoose');
 const path = require('path');
+const sendOTP =  require('../module/Otp');
 const multer = require('multer');
 const AWS = require('aws-sdk');
 const EnrollmentModel = require('../schema/EnrollmentSchema');
