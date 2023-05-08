@@ -699,10 +699,17 @@ router.post('/lactures_data_by_institute_id_for_institute', async (req, res) => 
       // console.log(Enrollment.courseName);
       const Lectures = await LectureModel.find({instituteId: InstituteId});
       console.log(Lectures);
-       res.json([{
-          id: 1,
-          data: Lectures,
-        }]);
+          if(Lectures !== null){
+        res.json([{
+           id: 1,
+           data: Lectures,
+         }]);
+        }else{
+          res.json([{
+            id: 0,
+            data: "No data",
+          }]);
+        }
  
   } catch (error) { 
     console.error(error);
