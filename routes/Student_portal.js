@@ -812,9 +812,12 @@ router.post('/Student_data_by_id', async (req, res) => {
   }
 });
 
-router.post('/upload_profile_pic_for_student', upload.single('profilePic'), async (req, res) => {
-  const profilePic = req.file.profilePic;
+router.post('/upload_profile_pic_for_student', upload.fields([
+  { name: 'profilePic', maxCount: 1 },
+]),  async (req, res) => {
+  const profilePic = req.files.profilePic;
   const email = req.body.Email;
+
 
   try {
     // Upload file to S3
