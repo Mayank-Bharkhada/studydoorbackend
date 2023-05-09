@@ -522,7 +522,10 @@ router.post('/getAllEnrollments', async (req, res) => {
       if (institute !== null) {
         const enrollments = await EnrollmentModel.find({ institute_id : institute._id }).exec();
         if(enrollments !== null){
-          res.send(enrollments);
+              res.json([{
+            id: 1,
+            data: enrollments,
+          }]);
         }else{
           res.json([{
             id: 0,
