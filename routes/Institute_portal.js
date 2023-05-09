@@ -199,7 +199,10 @@ router.post('/institute_data_by_id', async (req, res) => {
   
       const result = await InstituteModel.findOne({ _id: youtInstitute_id }).exec();
       if (result !== null) {
-        res.send(result);
+              res.json([{
+          id: 1,
+          data: result,
+        }]);
       }else{
         res.json([{
           id: 0,
