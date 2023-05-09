@@ -1056,13 +1056,13 @@ router.post('/approve_certificate_by_id', async (req, res) => {
 
 
 
-router.post('/upload_profile_pic_for_institute', upload.fields([
+router.post('/upload_profile_pic_for_institute',  upload.fields([
   { name: 'profilePic', maxCount: 1 },
 ]),  async (req, res) => {
   const profilePic = req.files.profilePic;
   const email = req.body.Email;
 
-
+  console.log(profilePic);
   try {
     // Upload file to S3
     await s3
@@ -1076,15 +1076,19 @@ router.post('/upload_profile_pic_for_institute', upload.fields([
 
   const profilePicUrl = `https://studydoor.s3.amazonaws.com/${profilePic[0].originalname}`;
 
+  console.log(profilePicUrl)
+  console.log(email)
 
     // Update the user's profile picture URL in the database
-    await InstituteModel.findOneAndUpdate(
-      { email: email },
-      { profilePhoto: profilePicUrl }
-    );
+   
+    const result = await InstituteModel.updateOne({ email: email }, { $set: { profilePhoto: profilePicUrl } }, { upsert: false } );
 
+    if (result.modifiedCount === 1) {
     // Return success response
     res.json([{ id: 1, text: 'Profile picture uploaded successfully' }]);
+    }else{
+      res.json([{ id: 0,  error: 'Failed to upload image'}]);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json([{ id: 1,  error: 'Failed to upload image'}]);
@@ -1097,7 +1101,7 @@ router.post('/upload_profile_pic_for_faculty', upload.fields([
   const profilePic = req.files.profilePic;
   const email = req.body.Email;
 
-
+  console.log(profilePic);
   try {
     // Upload file to S3
     await s3
@@ -1111,15 +1115,19 @@ router.post('/upload_profile_pic_for_faculty', upload.fields([
 
   const profilePicUrl = `https://studydoor.s3.amazonaws.com/${profilePic[0].originalname}`;
 
+  console.log(profilePicUrl)
+  console.log(email)
 
     // Update the user's profile picture URL in the database
-    await FacultyModel.findOneAndUpdate(
-      { email: email },
-      { profilePhoto: profilePicUrl }
-    );
+   
+    const result = await FacultyModel.updateOne({ email: email }, { $set: { profilePhoto: profilePicUrl } }, { upsert: false } );
 
+    if (result.modifiedCount === 1) {
     // Return success response
     res.json([{ id: 1, text: 'Profile picture uploaded successfully' }]);
+    }else{
+      res.json([{ id: 0,  error: 'Failed to upload image'}]);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json([{ id: 1,  error: 'Failed to upload image'}]);
