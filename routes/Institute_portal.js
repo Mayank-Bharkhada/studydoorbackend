@@ -1054,4 +1054,72 @@ router.post('/approve_certificate_by_id', async (req, res) => {
   }
 });
 
+
+
+router.post('/upload_profile_pic_for_institute', upload.single('profilePic'), async (req, res) => {
+  const profilePic = req.file.profilePic;
+  const email = req.body.Email;
+
+  try {
+    // Upload file to S3
+    await s3
+    .putObject({
+      Bucket: "studydoor",
+      Key: profilePic[0].originalname,
+      Body: profilePic[0].buffer,
+      ACL: 'public-read',
+    })
+    .promise();
+
+  const profilePicUrl = `https://studydoor.s3.amazonaws.com/${profilePic[0].originalname}`;
+
+
+    // Update the user's profile picture URL in the database
+    await InstituteModel.findOneAndUpdate(
+      { email: email },
+      { profilePhoto: profilePicUrl }
+    );
+
+    // Return success response
+    res.json([{ id: 1, text: 'Profile picture uploaded successfully' }]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json([{ id: 1,  error: 'Failed to upload image'}]);
+  }
+});
+
+router.post('/upload_profile_pic_for_faculty', upload.single('profilePic'), async (req, res) => {
+  const profilePic = req.file.profilePic;
+  const email = req.body.Email;
+
+  try {
+    // Upload file to S3
+    await s3
+    .putObject({
+      Bucket: "studydoor",
+      Key: profilePic[0].originalname,
+      Body: profilePic[0].buffer,
+      ACL: 'public-read',
+    })
+    .promise();
+
+  const profilePicUrl = `https://studydoor.s3.amazonaws.com/${profilePic[0].originalname}`;
+
+
+    // Update the user's profile picture URL in the database
+    await FacultyModel.findOneAndUpdate(
+      { email: email },
+      { profilePhoto: profilePicUrl }
+    );
+
+    // Return success response
+    res.json([{ id: 1, text: 'Profile picture uploaded successfully' }]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json([{ id: 1,  error: 'Failed to upload image'}]);
+  }
+});
+
+
+
 module.exports = router;
