@@ -819,7 +819,7 @@ router.post('/upload_profile_pic_for_student', upload.fields([
   const profilePic = req.files.profilePic;
   const email = req.body.Email;
 
-  console.log(profilePic);
+
   try {
     // Upload file to S3
     await s3
@@ -833,8 +833,6 @@ router.post('/upload_profile_pic_for_student', upload.fields([
 
   const profilePicUrl = `https://studydoor.s3.amazonaws.com/${profilePic[0].originalname}`;
 
-  console.log(profilePicUrl)
-  console.log(email)
 
     // Update the user's profile picture URL in the database
    
