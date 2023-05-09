@@ -923,7 +923,10 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
         const yourInstitute_id = req.body.institute_id;
         const yourCourse = req.body.course;
         const yourDepartment = req.body.department;
-     
+     console.log("Data);
+       console.log(yourInstitute_id)
+      console.log(yourCourse)
+      console.log(yourDepartment)
           const enrollments = await EnrollmentModel.find({ institute_id: yourInstitute_id, confirm: 1, courseName: yourCourse, courseDepartment: yourDepartment }).exec();
           if(enrollments !== null){
             res.json([{
