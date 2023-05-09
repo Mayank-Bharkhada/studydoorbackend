@@ -812,13 +812,14 @@ router.post('/Student_data_by_id', async (req, res) => {
   }
 });
 
+
 router.post('/upload_profile_pic_for_student', upload.fields([
   { name: 'profilePic', maxCount: 1 },
 ]),  async (req, res) => {
   const profilePic = req.files.profilePic;
   const email = req.body.Email;
 
-
+  console.log(profilePic);
   try {
     // Upload file to S3
     await s3
@@ -832,15 +833,19 @@ router.post('/upload_profile_pic_for_student', upload.fields([
 
   const profilePicUrl = `https://studydoor.s3.amazonaws.com/${profilePic[0].originalname}`;
 
+  console.log(profilePicUrl)
+  console.log(email)
 
     // Update the user's profile picture URL in the database
-    await StudentModel.findOneAndUpdate(
-      { email: email },
-      { profilePhoto: profilePicUrl }
-    );
+   
+    const result = await StudentModel.updateOne({ email: email }, { $set: { profilePhoto: profilePicUrl } }, { upsert: false } );
 
+    if (result.modifiedCount === 1) {
     // Return success response
     res.json([{ id: 1, text: 'Profile picture uploaded successfully' }]);
+    }else{
+      res.json([{ id: 0,  error: 'Failed to upload image'}]);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json([{ id: 1,  error: 'Failed to upload image'}]);
