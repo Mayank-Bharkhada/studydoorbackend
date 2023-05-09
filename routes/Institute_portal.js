@@ -1056,9 +1056,12 @@ router.post('/approve_certificate_by_id', async (req, res) => {
 
 
 
-router.post('/upload_profile_pic_for_institute', upload.single('profilePic'), async (req, res) => {
-  const profilePic = req.file.profilePic;
+router.post('/upload_profile_pic_for_institute', upload.fields([
+  { name: 'profilePic', maxCount: 1 },
+]),  async (req, res) => {
+  const profilePic = req.files.profilePic;
   const email = req.body.Email;
+
 
   try {
     // Upload file to S3
@@ -1088,9 +1091,12 @@ router.post('/upload_profile_pic_for_institute', upload.single('profilePic'), as
   }
 });
 
-router.post('/upload_profile_pic_for_faculty', upload.single('profilePic'), async (req, res) => {
-  const profilePic = req.file.profilePic;
+router.post('/upload_profile_pic_for_faculty', upload.fields([
+  { name: 'profilePic', maxCount: 1 },
+]),  async (req, res) => {
+  const profilePic = req.files.profilePic;
   const email = req.body.Email;
+
 
   try {
     // Upload file to S3
