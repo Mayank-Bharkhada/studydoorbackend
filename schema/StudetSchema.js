@@ -13,6 +13,11 @@ const StudentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+   profilePhoto: {
+    type: String,
+    required: false,
+    default: null,
+  },
   password: {
     type: String,
     required: true,
