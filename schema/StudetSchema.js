@@ -44,7 +44,7 @@ const StudentSchema = new mongoose.Schema({
   profilePhoto: {
     type: String,
     required: false,
-    default: null,
+    default: "https://studydoor.s3.amazonaws.com/MyProfile.jpg",
   },
   block: {
     type: Number,
