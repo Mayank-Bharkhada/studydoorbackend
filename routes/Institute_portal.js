@@ -891,7 +891,10 @@ router.post('/lactures_data_by_institute_id_for_faculty', async (req, res) => {
      
           const enrollments = await EnrollmentModel.find({ institute_id: yourInstitute_id, confirm: 1 }).exec();
           if(enrollments !== null){
-            res.send(enrollments);
+                res.json([{
+              id: 1,
+              data: enrollments,
+            }]);
           }else{
             res.json([{
               id: 0,
