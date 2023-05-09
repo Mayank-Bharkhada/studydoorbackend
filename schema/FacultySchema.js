@@ -13,6 +13,11 @@ const FacultySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  profilePhoto: {
+    type: String,
+    required: false,
+    default: null,
+  },
   number: {
     type: String,
     required: true,
