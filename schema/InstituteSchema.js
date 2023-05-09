@@ -11,6 +11,11 @@ const InstituteSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  profilePhoto: {
+    type: String,
+    required: false,
+    default: null,
+  },
   password: {
     type: String,
     required: true,
