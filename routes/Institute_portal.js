@@ -16,6 +16,7 @@ const LectureModel = require('../schema/LectureSchema');
 const FacultyModel = require('../schema/FacultySchema');
 const CertificateModel = require('../schema/CertificateSchema');
 const StudentModel = require('../schema/StudetSchema');
+const sendMSG = require('../module/Msg');
 
 AWS.config.update({
   accessKeyId: "AKIAZKCVVG4RL7DOYPHL",
