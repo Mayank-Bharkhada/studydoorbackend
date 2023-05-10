@@ -22,7 +22,12 @@ const CourseSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
     required:true
-  }
+  },
+    profilePhoto: {
+    type: String,
+    required: false,
+    default: null,
+  },
 });
 
 
