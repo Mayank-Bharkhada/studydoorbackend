@@ -44,6 +44,11 @@ const CertificateSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    required: true
+  }
 });
 
 const CertificateModel = mongoose.model('Certificate', CertificateSchema);
