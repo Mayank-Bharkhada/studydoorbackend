@@ -746,7 +746,7 @@ router.post('/request_for_certificate', async (req, res) => {
     course,
     department,
     number,
-    semester   } = req.body;
+    semester,profilePhoto    } = req.body;
 
   try {
     const certificate = await CertificateModel.create({
@@ -758,7 +758,8 @@ router.post('/request_for_certificate', async (req, res) => {
       department,
       number,
       confirm: false,
-      semester 
+      semester,
+      profilePhoto
     });
 
     res.status(201).json({id:1, data: "certificate" });
