@@ -260,6 +260,7 @@ router.post('/Generate_course', async (req, res) => {
        institute_id: doc._id,
         courseName:yourCourseName,
         department: yourDepartment,
+         profilePhoto : doc.profilePhoto
       });
        const result =  await Course.save();
         console.log(result);
