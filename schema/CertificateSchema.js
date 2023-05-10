@@ -38,7 +38,12 @@ const CertificateSchema = new mongoose.Schema({
   semester: {
     type: String,
     required: true
-  }
+  },
+  profilePhoto: {
+    type: String,
+    required: false,
+    default: null,
+  },
 });
 
 const CertificateModel = mongoose.model('Certificate', CertificateSchema);
