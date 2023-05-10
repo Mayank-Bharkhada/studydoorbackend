@@ -1039,19 +1039,31 @@ router.post('/delete_certificate_by_id', async (req, res) => {
 });
 
 router.post('/approve_certificate_by_id', async (req, res) => {
-  try {
-      const certificateId = req.body.certificateId;
+ try {
+    const certificateId = req.body.certificateId;
+    const semester = req.body.semester;
 
-      // Update the certificate document to confirm true
+    const newSemester1 = parseInt(semester);
+    const newSemester2 = newSemester1 + 1;
+
+    if (semester === "8") {
+
       const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
 
-      // Update the student document to set watch video and given quiz to null
-      const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watch_video: null, given_quiz: null } });
+      const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watchedVideos: null, givenExam: null, completion_date: Date.now() } });
+    } else {
 
-      res.json({ success: true, message: "Certificate approved successfully." });
+      const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
+
+
+      const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watchedVideos: null, givenExam: null, semester: newSemester2 } });
+    }
+
+
+    res.json({ success: true, message: "Certificate approved successfully." });
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Unable to approve certificate." });
+    console.error(error);
+    res.status(500).json({ success: false, message: "Unable to approve certificate." });
   }
 });
 
