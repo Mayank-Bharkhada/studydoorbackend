@@ -92,7 +92,7 @@ router.post("/Admin_login",async (req,res) => {
 
   //call through /api/User/Student_data
 
-router.post('/Student_data_by_id', async (req, res) => {
+router.post('/admin/Student_data_by_id', async (req, res) => {
   try {
     console.log(req.body);
     const student_id = req.body.student_id;
