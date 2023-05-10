@@ -1039,7 +1039,7 @@ router.post('/delete_certificate_by_id', async (req, res) => {
 });
 
 router.post('/approve_certificate_by_id', async (req, res) => {
- try {
+  try {
     const certificateId = req.body.certificateId;
     const semester = req.body.semester;
 
@@ -1051,12 +1051,22 @@ router.post('/approve_certificate_by_id', async (req, res) => {
       const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
 
       const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watchedVideos: null, givenExam: null, completion_date: Date.now() } });
+
+      
+      const StudentData = await StudentModel.findOne({ _id: updatedCertificate.studentId }).exec();
+      const Data = await sendMSG(StudentData.email, StudentData.phone,"Your verification request for certificates is confirmed successfully now you can download the certificate");
+      console.log(Data)
+
     } else {
 
       const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
 
 
       const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watchedVideos: null, givenExam: null, semester: newSemester2 } });
+   
+      const StudentData = await StudentModel.findOne({ _id: updatedCertificate.studentId }).exec();
+      const Data = await sendMSG(StudentData.email, StudentData.phone,"Your verification request for certificates is confirmed successfully now you can download the certificate");
+      console.log(Data)
     }
 
 
