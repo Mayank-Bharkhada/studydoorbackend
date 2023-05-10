@@ -626,6 +626,14 @@ router.post('/enroll_Confirm', async (req, res) => {
       // const yourPhone = req.body.Phone;
   console.log(yourEnroll_id)
       
+       const EnrollData = await EnrollmentModel.findOne({ _id: yourEnroll_id }).exec();
+    const studentData = await StudentModel.findOne({ _id: EnrollData.student_id }).exec();
+    const instituteData = await InstituteModel.findOne({ _id: EnrollData.institute_id }).exec();
+
+
+      const Data = await sendMSG(studentData.email, studentData.number,`congretulation ${EnrollData.studentName}Your verification request for is confirmed successfully  at ${instituteData.name} in  Department : ${EnrollData.courseDepartment} and Course : ${EnrollData.courseName} now you can start learning`);
+      console.log(Data)
+    
     const result = await EnrollmentModel.updateOne({_id: yourEnroll_id }, { $set: { confirm: "1" } }, { upsert: false } );
 
     console.log(result)
