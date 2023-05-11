@@ -592,7 +592,10 @@ router.post('/Course_Enrollment', async (req, res) => {
       const yourUserUuid= req.body.UserUuid;
 
       const student = await StudentModel.findOne({ email: yourEmail }).exec();
-      console.log(student._id)
+   
+      console.log("student._id")
+    console.log(yourUserName)
+    console.log(yourUserUuid)
       if (student !== null) {
         const Enrollment = new EnrollmentModel ({
           student_id: student._id,
