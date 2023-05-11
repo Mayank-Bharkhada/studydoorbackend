@@ -23,6 +23,14 @@ const enrollmentSchema = new Schema({
     unique: false, 
     required: true
   },
+   UserName: {
+    type: String,
+    required: true,
+  },
+  UserUuid: {
+    type: String,
+    required: true,
+  },
   studentName: {
     type: String,
     unique: false, 
