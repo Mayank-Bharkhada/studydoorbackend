@@ -178,11 +178,11 @@ const StudentData = await StudentModel.findOne({ _id: studentId }).exec();
       const updatedStudent = await StudentModel.updateOne({ _id: studentId }, { $set: { verified : 1, verificationRequest : 0} });
 console.log(updatedStudent)
 
-      // if (updatedStudent.modifiedCount === 1) {
-      // res.status(200).json({ success: true, message: "Institute varified successfully." });
-      // }else{
-      //   res.status(201).json({ success: false, message: "Error no data" });
-      // }
+      if (updatedStudent.modifiedCount === 1) {
+      res.status(200).json({ success: true, message: "Institute varified successfully." });
+      }else{
+        res.status(201).json({ success: false, message: "Error no data" });
+      }
   } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Unable to approve certificate." });
