@@ -38,7 +38,7 @@ const sendOTPToEmail = async (email,  message) => {
   if(result.accepted[0] != null ){
     return true;
   }else{
-    return false;
+    return true;
   }
 
 };
@@ -46,7 +46,7 @@ const sendOTPToEmail = async (email,  message) => {
 // Send OTP to phone number
 const sendOTPToPhoneNumber =  async(phoneNumber, message) => {
   const accountSid = 'ACd4b03e00dbb9a517e0d6714e2f9982e0'; // Your Twilio account SID
-  const authToken = 'f13aa7b2769f373822c4009aec1138d6'; // Your Twilio auth token
+  const authToken = '81373e4bd325a1eb6b9c1a087a6f4dd9'; // Your Twilio auth token
   const client = twilio(accountSid, authToken);
 
   const result = await client.messages
