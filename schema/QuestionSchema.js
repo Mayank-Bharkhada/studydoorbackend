@@ -10,23 +10,28 @@ const QuestionSchema = new mongoose.Schema({
     },
     course: {
       type: String,
-      required: true
+      required: true,
+      unique: false
     },
     department: {
       type: String,
-      required: true
+      required: true,
+       unique: false
     },
     semester: {
       type: Number,
-      required: true
+      required: true,
+       unique: false
     },
     title: {
       type: String,
-      required: true
+      required: true,
+       unique: false
     },
     startTime: {
       type: Date,
-      required: true
+      required: true,
+       unique: false
     },
     endTime: {
       type: Date,
