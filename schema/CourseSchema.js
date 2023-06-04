@@ -28,6 +28,11 @@ const CourseSchema = new mongoose.Schema({
     required: false,
     default: null,
   },
+    name: {
+    type: String,
+    required: false,
+    default: null,
+  }
 });
 
 
