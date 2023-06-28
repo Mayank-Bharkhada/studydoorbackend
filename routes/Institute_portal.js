@@ -1060,7 +1060,10 @@ router.post('/approve_certificate_by_id', async (req, res) => {
 
       const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
 
-      const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watchedVideos: null, givenExam: null, completion_date: Date.now() } });
+
+        
+        const updatedStudent = await EnrollmentModel.findOneAndUpdate({ _id: updatedCertificate.enrollmentId }, { $set: { watchedVideos: null, givenExam: null, semester: 9, completion_date: Date.now() } });
+       
 
       
       const StudentData = await StudentModel.findOne({ _id: updatedCertificate.studentId }).exec();
@@ -1072,7 +1075,7 @@ router.post('/approve_certificate_by_id', async (req, res) => {
       const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
 
 
-      const updatedStudent = await StudentModel.findOneAndUpdate({ _id: updatedCertificate.studentId }, { $set: { watchedVideos: null, givenExam: null, semester: newSemester2 } });
+      const updatedStudent = await EnrollmentModel.findOneAndUpdate({ _id: updatedCertificate.enrollmentId }, { $set: { watchedVideos: null, givenExam: null, semester: newSemester2 } });
    
       const StudentData = await StudentModel.findOne({ _id: updatedCertificate.studentId }).exec();
       const Data = await sendMSG(StudentData.email, StudentData.phone,"Your verification request for certificates is confirmed successfully now you can download the certificate");
