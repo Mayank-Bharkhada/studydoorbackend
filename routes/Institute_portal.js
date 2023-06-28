@@ -1073,8 +1073,7 @@ router.post('/approve_certificate_by_id', async (req, res) => {
     } else {
 
       const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
-
-'
+      
       const updatedStudent = await EnrollmentModel.findOneAndUpdate({ _id: updatedCertificate.enrollmentId }, { $set: { watchedVideos: [], givenExam: {"exam_id" :"649baf465be1856ecdb4bb3c", "marks" : 100}, semester: newSemester2 } });
    
       const StudentData = await StudentModel.findOne({ _id: updatedCertificate.studentId }).exec();
