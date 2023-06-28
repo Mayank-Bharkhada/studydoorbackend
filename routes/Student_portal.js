@@ -317,7 +317,7 @@ router.post('/fetch_all_books_by_users_id', async (req, res) => {
       console.log(Enrollment.institute_id);
       console.log(Enrollment.courseDepartment);
       console.log(Enrollment.courseName);
-      const Books = await BookModel.find({institute_id: Enrollment.institute_id,courseName:Enrollment.courseName,department:Enrollment.courseDepartment});
+      const Books = await BookModel.find({institute_id: Enrollment.institute_id,courseName:Enrollment.courseName,department:Enrollment.courseDepartment, semester : Enrollment.semester });
       console.log(Books);
      if(Books){
         res.json([{
@@ -380,7 +380,7 @@ router.post('/fetch_all_quiz_by_users_id', async (req, res) => {
       console.log(Enrollment.institute_id);
       console.log(Enrollment.courseDepartment);
       console.log(Enrollment.courseName);
-      const question = await QuestionModel.find({institute_id: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
+      const question = await QuestionModel.find({institute_id: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment, semester : Enrollment.semester });
       console.log(question);
          if (question) {
         res.json([{
@@ -418,7 +418,7 @@ router.post('/fetch_all_videos_by_users_id', async (req, res) => {
       console.log(Enrollment.institute_id);
       console.log(Enrollment.courseDepartment);
       console.log(Enrollment.courseName);
-      const Videos = await VideoModel.find({institute_id: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
+      const Videos = await VideoModel.find({institute_id: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment, semester : Enrollment.semester });
       console.log(Videos);
        if(Videos){
         res.json([{
@@ -455,7 +455,7 @@ router.post('/fetch_all_lectures_by_users_id', async (req, res) => {
       console.log(Enrollment.institute_id);
       console.log(Enrollment.courseDepartment);
       console.log(Enrollment.courseName);
-      const Lectures = await LectureModel.find({instituteId: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment});
+      const Lectures = await LectureModel.find({instituteId: Enrollment.institute_id,course:Enrollment.courseName,department:Enrollment.courseDepartment, semester : number.toString(Enrollment.semester) });
       console.log(Lectures);
        res.json([{
           id: 1,
