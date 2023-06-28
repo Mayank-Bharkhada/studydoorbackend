@@ -1062,7 +1062,7 @@ router.post('/approve_certificate_by_id', async (req, res) => {
 
 
         
-        const updatedStudent = await EnrollmentModel.findOneAndUpdate({ _id: updatedCertificate.enrollmentId }, { $set: {  watchedVideos: [], givenExam: {"exam_id" :"649baf465be1856ecdb4bb3c", "marks" : 100}, semester: 9, completion_date: Date.now() } });
+        const updatedStudent = await EnrollmentModel.findOneAndUpdate({ _id: updatedCertificate.enrollmentId }, { $set: {  watchedVideos: ["647c2062635e238b1eaf7aa1"], givenExam: {"exam_id" :"649baf465be1856ecdb4bb3c", "marks" : 100}, semester: 9, completion_date: Date.now() } });
        
 
       
@@ -1074,7 +1074,7 @@ router.post('/approve_certificate_by_id', async (req, res) => {
 
       const updatedCertificate = await CertificateModel.findByIdAndUpdate(certificateId, { confirm: true });
       
-      const updatedStudent = await EnrollmentModel.findOneAndUpdate({ _id: updatedCertificate.enrollmentId }, { $set: { watchedVideos: [], givenExam: {"exam_id" :"649baf465be1856ecdb4bb3c", "marks" : 100}, semester: newSemester2 } });
+      const updatedStudent = await EnrollmentModel.findOneAndUpdate({ _id: updatedCertificate.enrollmentId }, { $set: { watchedVideos: ["647c2062635e238b1eaf7aa1"], givenExam: {"exam_id" :"649baf465be1856ecdb4bb3c", "marks" : 100}, semester: newSemester2 } });
    
       const StudentData = await StudentModel.findOne({ _id: updatedCertificate.studentId }).exec();
       const Data = await sendMSG(StudentData.email, StudentData.phone,"Your verification request for certificates is confirmed successfully now you can download the certificate");
